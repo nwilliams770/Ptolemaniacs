@@ -1,0 +1,9 @@
+{
+  "nodes": [
+    {"name": "Ptolemy I Soter", "title": "Pharaoh of Egypt", "birth-death": "305-282 BC", "info": "The head of the pack"},
+    {"name": "Berenice I", "birth-death": "340-268 BC", "info": "Test"}
+  ],
+  "links": [
+    {"source": 0, "target": 1, "type": "marriage"}
+  ]
+}
