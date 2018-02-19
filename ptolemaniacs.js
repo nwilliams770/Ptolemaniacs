@@ -1,12 +1,12 @@
-let width = 960,
-    height = 500;
+let width = 1920,
+    height = 1000;
 
 const svg = d3.select("#chart").append("svg")
       .attr("width", width)
       .attr("height", height);
 
 let force = d3.forceSimulation()
-  .force("charge", d3.forceManyBody().strength(-700).distanceMin(100).distanceMax(1000))
+  .force("charge", d3.forceManyBody().strength(-1000).distanceMin(100).distanceMax(500))
   .force("link", d3.forceLink().id(function (d) { return d.index }))
   .force("center", d3.forceCenter(width / 2, height / 2))
   .force("y", d3.forceY(0.001))
@@ -30,7 +30,12 @@ d3.json("graph.json", function (error, json) {
       .attr("class", "node");
   
   let circle = node.append('circle')
-      .attr('r', 13)
+      .attr('r', 13);
+  
+  node.append("text")
+    .attr("dx", 20)
+    .attr("dy", ".35em")
+    .text(function (d) { return d.name });
 
   force.on("tick", function () {
     link.attr("x1", function (d) {
