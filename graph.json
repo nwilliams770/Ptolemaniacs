@@ -1,9 +1,107 @@
 {
   "nodes": [
-    {"name": "Ptolemy I Soter", "title": "Pharaoh of Egypt", "birth-death": "305-282 BC", "group": 1},
-    {"name": "Berenice I", "birth-death": "340-268 BC", "group": 2}
+    {"name": "Ptolemy I Soter", "title": "Pharaoh of Egypt", "birth-death": "305-282 BC", "generation": 1},
+    {"name": "Berenice I", "birth-death": "340-268 BC", "generation": 1},
+    {"name": "Ptolemy II Philadelphus", "birth-death": "309-246 BC", "generation": 2},
+    {"name": "Arsinoë II", "birth-death": "316-260 BC", "generation": 2},
+    {"name": "King Lysimachus", "birth-death": "360-281 BC", "generation": 2},
+    {"name": "Arsinoë I", "birth-death": "316-260 BC", "generation": 2},
+    {"name": "Philotera", "birth-death": "308-268 BC", "generation": 2},
+    {"name": "Ptolemy I Epigonos", "birth-death": "299-240 BC", "generation": 3},
+    {"name": "Lysimachus", "birth-death": "296-279 BC", "generation": 3},
+    {"name": "Philip", "birth-death": "294-279 BC", "generation": 3},
+    {"name": "Ptolemy III Euergetes", "birth-death": "246-222 BC", "generation": 3},
+    {"name": "Lysimachus of Egypt", "birth-death": "unknown", "generation": 3},
+    {"name": "Berenice Phernophorus", "birth-death": "275-246 BC", "generation": 3},
+    {"name": "Ptolemy Keraunos", "birth-death": "321-279 BC", "generation": 2},
+    {"name": "Berenice II", "birth-death": "267-221 BC", "generation": 3},
+    {"name": "Arsinoë III", "birth-death": "267-221 BC", "generation": 4},
+    {"name": "Ptolemy IV Philopator", "birth-death": "267-221 BC", "generation": 4},
+    {"name": "Alexander", "birth-death": "267-221 BC", "generation": 4},
+    {"name": "Magas", "birth-death": "267-221 BC", "generation": 4},
+    {"name": "Berenice", "birth-death": "267-221 BC", "generation": 4},
+    {"name": "Ptolemy V Epiphanes", "birth-death": "204-181 BC", "generation": 5},
+    {"name": "Cleopatra I", "birth-death": "204-176 BC", "generation": 5}
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
   ],
   "links": [
-    {"source": 0, "target": 1, "type": "marriage"}
+    {"source": 0, "target": 1, "type": "marriage"},
+    
+    {"source": 0, "target": 2, "type": "child"},
+    {"source": 1, "target": 2, "type": "child"},
+    
+    {"source": 0, "target": 3, "type": "child"},
+    {"source": 1, "target": 3, "type": "child"},
+    
+    {"source": 0, "target": 6, "type": "child"},
+    {"source": 1, "target": 6, "type": "child"},
+
+    {"source": 4, "target": 3, "type": "marriage"},
+    {"source": 2, "target": 3, "type": "marriage"},
+    {"source": 2, "target": 5, "type": "marriage"},
+
+    {"source": 3, "target": 7, "type": "child"},
+    {"source": 3, "target": 8, "type": "child"},
+    {"source": 3, "target": 9, "type": "child"},
+    {"source": 4, "target": 7, "type": "child"},
+    {"source": 4, "target": 8, "type": "child"},
+    {"source": 4, "target": 9, "type": "child"},
+
+    {"source": 5, "target": 10, "type": "child"},
+    {"source": 5, "target": 11, "type": "child"},
+    {"source": 5, "target": 12, "type": "child"},
+    {"source": 2, "target": 10, "type": "child"},
+    {"source": 2, "target": 11, "type": "child"},
+    {"source": 2, "target": 12, "type": "child"},
+
+    {"source": 3, "target": 13, "type": "marriage"},
+
+    {"source": 14, "target": 15, "type": "child"},
+    {"source": 14, "target": 16, "type": "child"},
+    {"source": 14, "target": 17, "type": "child"},
+    {"source": 14, "target": 18, "type": "child"},
+    {"source": 14, "target": 19, "type": "child"},
+    {"source": 10, "target": 15, "type": "child"},
+    {"source": 10, "target": 16, "type": "child"},
+    {"source": 10, "target": 17, "type": "child"},
+    {"source": 10, "target": 18, "type": "child"},
+    {"source": 10, "target": 19, "type": "child"},
+
+    {"source": 15, "target": 16, "type": "marriage"},
+
+    {"source": 15, "target": 20, "type": "child"},
+    {"source": 16, "target": 20, "type": "child"},
+
+    {"source": 20, "target": 21, "type": "marriage"}
+    
+    
+
+    
+    
+    
+
+
+    
+    
+    
+
+
+    
+    
+    
+    
   ]
 }
