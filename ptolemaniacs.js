@@ -1,14 +1,14 @@
-let width = 1920,
-    height = 1000;
+let width = 960,
+    height = 500;
 
 const svg = d3.select("#chart").append("svg")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("width", width * 3)
+      .attr("height", height * 3);
 
 let force = d3.forceSimulation()
-  .force("charge", d3.forceManyBody().strength(-1000).distanceMin(100).distanceMax(500))
+  .force("charge", d3.forceManyBody().strength(-2000).distanceMin(10).distanceMax(1000))
   .force("link", d3.forceLink().id(function (d) { return d.index }))
-  .force("center", d3.forceCenter(width / 2, height / 2))
+  .force("center", d3.forceCenter(width * 1.5, height * 1.5))
   .force("y", d3.forceY(0.001))
   .force("x", d3.forceX(0.001));
 
