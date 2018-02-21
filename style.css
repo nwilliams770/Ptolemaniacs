@@ -12,12 +12,9 @@
 
 .node text {
   display: none;
-  font: 10px sans-serif;
+  font: 20px sans-serif;
 }
 
-.node:hover circle {
-  fill: #000;
-}
 
 .node:hover text {
   display: inline;
