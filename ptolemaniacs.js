@@ -22,7 +22,15 @@ d3.json("graph.json", function (error, json) {
       .data(json.links)
       .enter()
       .append("line")
-      .attr("class", "link");
+      .attr("class", "link")
+      .style("stroke", function (d) {
+        switch (d.type) {
+          case "child":
+            return "red";
+          case "marriage":
+            return "blue";
+        }
+      });
   
   let node = svg.selectAll(".node")
       .data(json.nodes)
