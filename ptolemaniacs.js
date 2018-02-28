@@ -1,22 +1,24 @@
 let width = 960,
     height = 500;
 
-const svg = d3.select("#chart").append("svg")
-      .attr("width", width * 6)
-      .attr("height", height * 6);
+const svg = d3.select("#chart")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
 
-let force = d3.forceSimulation()
-  .force("charge", d3.forceManyBody().strength(-1500).distanceMin(10).distanceMax(3000))
+const force = d3.forceSimulation()
+  .force("charge", d3.forceManyBody().strength(-100).distanceMin(10).distanceMax(200))
   .force("link", d3.forceLink().id(function (d) { return d.index }))
-  .force("center", d3.forceCenter(width * 3, height * 3))
+  .force("center", d3.forceCenter(width / 2 , height / 2))
   .force("y", d3.forceY(0.001))
   .force("x", d3.forceX(0.001));
 
-d3.json("graph.json", function (error, json) {
+d3.json("data.json", function (error, json) {
   if (error) throw error;
   force
       .nodes(json.nodes)
-      .force("link").links(json.links);
+      .force("link")
+      .links(json.links);
   
   let link = svg.selectAll('.link')
       .data(json.links)
@@ -64,7 +66,7 @@ d3.json("graph.json", function (error, json) {
   });
   
   let circle = node.append('circle')
-      .attr('r', 13);
+      .attr('r', 10);
   
   node.append("text")
     .attr("dx", 20)

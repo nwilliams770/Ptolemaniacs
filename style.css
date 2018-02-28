@@ -1,6 +1,6 @@
 .link {
   stroke-opacity: 0.3;
-  stroke-width: 1.5px;
+  stroke-width: 5px;
 }
 
 .node circle {
@@ -11,6 +11,7 @@
 .node text {
   display: none;
   font: 20px sans-serif;
+  z-index: 50;
 }
 
 
