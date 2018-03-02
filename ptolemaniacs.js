@@ -68,10 +68,11 @@ d3.json("data.json", function (error, json) {
   let circle = node.append('circle')
       .attr('r', 10);
   
-  node.append("text")
+  let label = node.append("text")
     .attr("dx", 20)
     .attr("dy", ".35em")
-    .text(function (d) { return d.name });
+    .attr("class", "text")
+    .text(function (d) { return d.name; });
 
   force.on("tick", function () {
     link.attr("x1", function (d) {

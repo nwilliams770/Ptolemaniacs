@@ -8,10 +8,11 @@
   stroke-width: 1.5px;
 }
 
-.node text {
+.text {
   display: none;
   font: 20px sans-serif;
   z-index: 50;
+  fill: red;
 }
 
 
