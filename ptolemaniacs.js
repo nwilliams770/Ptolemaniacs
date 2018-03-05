@@ -62,8 +62,11 @@ d3.json("data.json", function (error, json) {
             return "96e9fb";
           case 11:
             return "9cebfb";
-        } 
-  });
+        }})
+        .call(d3.drag()
+          .on("start", dragBegin)
+          .on("drag", dragging)
+          .on("end", dragEnded));
   
   let circle = node.append('circle')
       .attr('r', 10);
