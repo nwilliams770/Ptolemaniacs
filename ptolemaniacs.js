@@ -1,4 +1,4 @@
-let width = 1920,
+var width = 1920,
     height = 1000;
 
 const svg = d3.select("#chart")
@@ -7,29 +7,21 @@ const svg = d3.select("#chart")
       .attr("height", height);
 
 const simulation = d3.forceSimulation()
-  .force("link", d3.forceLink())
+  .force("link", d3.forceLink().distance(20).strength(0.3))
   .force("charge", d3.forceManyBody())
-  // .strength(-800).distanceMin(5).distanceMax(300))
-  // .force("link", d3.forceLink().id(function (d) { return d.index }))
   .force("center", d3.forceCenter(width / 2 , height / 2));
-  // .force("y", d3.forceY(0.001))
-  // .force("x", d3.forceX(0.001));
 
 d3.json("data.json", function (error, json) {
   if (error) throw error;
-  // force
-  //   .nodes(json.nodes)
-  //   .force("link")
-  //   .links(json.links);
 
   // converting json.nodes to array\
   // must add bilinks for curved links
-  let nodes = json.nodes,
+  var nodes = json.nodes,
       links = json.links,
       bilinks = [];
 
   links.forEach(function(link) {
-    let s = nodes[link.source],
+    var s = nodes[link.source],
         t = nodes[link.target],
         i = {},
         type = link.type;
@@ -38,10 +30,10 @@ d3.json("data.json", function (error, json) {
     bilinks.push([s, i, t, type]);
   });
 
-  let link = svg.selectAll(".link")
+  var link = svg.selectAll(".link")
     .data(bilinks)
     .enter().append("path")
-    .attr("class", "link")
+    .attr("class", function (d) { return "link " + d.type; })
       .style("stroke", function (d) {
         switch (d.pop()) {
           case "child":
@@ -51,9 +43,10 @@ d3.json("data.json", function (error, json) {
         }
       });
 
-  let node = svg.selectAll(".node")
+  var node = svg.selectAll(".node")
     .data(nodes.filter(function (d) { return d.name; }))
-    .enter().append("circle")
+    .enter()
+    .append("circle")
     .attr("class", "node")
     .attr("r", 5)
     .style("fill", function (d) {
@@ -81,19 +74,21 @@ d3.json("data.json", function (error, json) {
         case 11:
           return "9cebfb";
       }
-    });
-        // .call(d3.drag()
-        //   .on("start", dragBegin)
-        //   .on("drag", dragging)
-        //   .on("end", dragEnded));
-  node.append("title")
-    .text(function (d) { return d.name; });
+    })
+    // .on("mouseover", handleMouseOver)
+    // .on("mouseout", handleMouseOut)
+    .call(d3.drag()
+      .on("start", dragstarted)
+      .on("drag", dragged)
+      .on("end", dragended));
 
 
-  let label = node.append("text")
-    .attr("dx", 20)
+  node.append("text")
+    .attr("dx", "20em")
     .attr("dy", ".35em")
     .attr("class", "text")
+    .attr("fill", "pink")
+    .attr("stroke", "red")
     .text(function (d) { return d.name; });
   
   simulation
@@ -103,13 +98,36 @@ d3.json("data.json", function (error, json) {
     .force("link")
     .links(links);
   
+// function handleMouseOver(d, i) {
+//   d3.select(this).attr({fill: 'black'});
+//   d3.select(this).append("text")
+//   // .attr({
+//   //   id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
+//   // })
+//   .attr("dx", 10)
+//   .attr("dy", ".35em")
+//   .attr("class", "text")
+//   .text(function (d) { return d.name})
+//   .style("stroke", "red");
+// }
 
+// function handleMouseOut(d, i) {
+//   d3.select(this).attr({
+//     fill: "pink",
+//   });
+//   d3.select("#t" + d.x + "-" + d.y + "-" + i).remove();  // Remove text location
+// }
 
-
-  function ticked() {
+function ticked() {
     link.attr("d", positionLink);
     node.attr("transform", positionNode);
-  }
+    d3.selectAll("text").attr("x", function (d) {
+      return d.x;
+    })
+      .attr("y", function (d) {
+        return d.y;
+      });
+}
 
 function positionLink(d) {
   return "M" + d[0].x + "," + d[0].y
@@ -121,23 +139,19 @@ function positionNode(d) {
   return "translate(" + d.x + "," + d.y + ")";
 }
 
-  // simulation.on("tick", function () {
-  //   link.attr("x1", function (d) {
-  //     return d.source.x;
-  //   })
-  //     .attr("y1", function (d) {
-  //       return d.source.y;
-  //     })
-  //     .attr("x2", function (d) {
-  //       return d.target.x;
-  //     })
-  //     .attr("y2", function (d) {
-  //       return d.target.y;
-  //     });
-  //   node.attr("transform", function (d) {
-  //     return "translate(" + d.x + "," + d.y + ")";
-  //   });
-  // });
+  function dragstarted(d) {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x, d.fy = d.y;
+  }
+
+  function dragged(d) {
+    d.fx = d3.event.x, d.fy = d3.event.y;
+  }
+
+  function dragended(d) {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    d.fx = null, d.fy = null;
+  }
   
 });
 
