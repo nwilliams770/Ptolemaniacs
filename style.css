@@ -5,24 +5,25 @@
   /* stroke: pink; */
 }
 
-.node {
-  stroke: white;
-  stroke-width: 2px;
+.link.marriage {
+   stroke-dasharray: 0,2 1;
 }
 
-.text {
-  display: none;
-  font: 20px sans-serif;
-  z-index: 50;
-  fill: red;
+
+.node:hover circle {
+  fill: pink;
 }
 
-/* 
 .node:hover text {
   display: inline;
-} */
+}
 
-/* .cell {
-  fill: none;
-  pointer-events: all;
-} */
+.node text {
+  font: 20px helvetica;
+  display: none;
+  stroke: pink;
+  fill: pink;
+  z-index: 1000;
+  shadow: 2px 2px black;
+
+}
