@@ -25,5 +25,9 @@
   fill: pink;
   z-index: 1000;
   shadow: 2px 2px black;
+}
 
+#bg {
+  height: 100vh;
+  display: none;
 }
