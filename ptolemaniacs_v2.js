@@ -184,5 +184,38 @@ d3.json("data.json", function (error, json) {
     }
   }
 
+  // ETC FUNCTIONALITY *****
+  function filterRegencies() {
+    var nodes = svg.selectAll('.node');
+    var selected = nodes.filter(function (d, i) {
+      return d.generation != 3;
+    });
+    selected.style('opacity', '0');
+    d3.selectAll(".node").transition().duration(5000);
+  }
+
+
+
+  // const labels = document.querySelectorAll('.node text');
+  // const labelButton = document.querySelector('.bttn-labels');
+  // let labelsShown = false;
+
+  // function toggleLabels() {
+  //  if (!labelsShown) {
+  //   labels.forEach(lab => {
+  //     lab.style.display = 'inline';
+  //   });
+  //  } else {
+  //    labels.forEach(lab => {
+  //      lab.style.display = 'none';
+  //    });
+  //  }
+  // labelsShown = !labelsShown;
+  // force.start();
+  // }
+
+  // labelButton.addEventListener('click', toggleLabels);
+  
+
 });
 
