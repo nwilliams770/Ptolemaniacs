@@ -123,64 +123,159 @@
 
     {"name": "Ptolemy V Epiphanes", 
      "birth-death": "204-181 BC", 
-     "generation": 5},
-    {"name": "Cleopatra I", "birth-death": "204-176 BC", "generation": 5},
-    {"name": "Cleopatra II", "birth-death": "185-116 BC", "generation": 6},
-    {"name": "Ptolemy VI Philometor", "birth-death": "186-145 BC", "generation": 6},
-    {"name": "Ptolemy VIII Physcon", "birth-death": "182-116 BC", "generation": 6},
-    {"name": "Ptolemy VII Neos Philopator", "birth-death": "unknown", "generation": 7},
-    {"name": "Cleopatra III", "birth-death": "160-101 BC", "generation": 7},
-    {"name": "Cleopatra Thea", "birth-death": "164-121 BC", "generation": 7},
-    {"name": "Berenice", "birth-death": "unknown", "generation": 7},
-    {"name": "Ptolemy Memphites", "birth-death": "unknown", "generation": 7},
-    {"name": "Ptolemy IX Lathyros", "birth-death": "143-81 BC", "generation": 8},
-    {"name": "Ptolemy X Alexander I", "birth-death": "death: 88 BC", "generation": 8},
-    {"name": "Cleopatra IV", "birth-death": "138-112 BC", "generation": 8},
-    {"name": "Cleopatra Selene", "birth-death": "135-69 BC", "generation": 8},
-    {"name": "Tryphaena", "birth-death": "141-111 BC", "generation": 8},
-    {"name": "Antiochus IX Cyzicenus", "birth-death": "unknown-96 BC", "generation": 8},
-    {"name": "Ptolemy XII Auletes", "birth-death": "117-51 BC", "generation": 9},
-    {"name": "Ptolemy of Cyprus", "birth-death": "116-58 BC", "generation": 9},
-    {"name": "Ptolemy XI Alexander II", "birth-death": "115-80 BC", "generation": 9},
-    {"name": "Berenice III", "birth-death": "120-80 BC", "generation": 9},
-    {"name": "Ptolemy XII Auletes", "birth-death": "117-51 BC", "generation": 9},
-    {"name": "Cleopatra V Tryphaena", "birth-death": "95-69 BC", "generation": 10},
-    {"name": "Berenice IV Epiphaneia", "birth-death": "77-55 BC", "generation": 11},
-    {"name": "Cleopatra VII Philopator", "birth-death": "69-30 BC", "generation": 11},
-    {"name": "Arsinoë IV", "birth-death": "68-41 BC", "generation": 11},
-    {"name": "Ptolemy XIII Theos Philopator", "birth-death": "62-47 BC", "generation": 11},
-    {"name": "Ptolemy XIV", "birth-death": "60-44 BC", "generation": 11}
+     "generation": 5,
+     "murdered?": false,
+     "familial-ruler?": false},
     
-    
-    
-    
-    
-    
+     {"name": "Cleopatra I", 
+     "birth-death": "204-176 BC", 
+     "generation": 5,
+     "murdered?": false,
+     "familial-ruler?": false},
 
-    
-    
+    {"name": "Cleopatra II", 
+     "birth-death": "185-116 BC", 
+     "generation": 6,
+     "murdered?": false,
+     "familial-ruler?": true},
 
+    {"name": "Ptolemy VI Philometor", 
+     "birth-death": "186-145 BC", 
+     "generation": 6,
+     "murdered?": false,
+     "familial-ruler?": true},
 
-    
+    {"name": "Ptolemy VIII Physcon", 
+     "birth-death": "182-116 BC", 
+     "generation": 6,
+     "murdered?": false,
+     "familial-ruler?": false},
 
-    
+    {"name": "Ptolemy VII Neos Philopator", 
+     "birth-death": "unknown", 
+     "generation": 7,
+     "murdered?": false,
+     "familial-ruler?": false},
 
-    
-    
-    
-    
-    
-    
+    {"name": "Cleopatra III",
+     "birth-death": "160-101 BC",
+     "generation": 7,
+     "murdered?": true,
+     "familial-ruler?": true},
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    {"name": "Cleopatra Thea", 
+     "birth-death": "164-121 BC", 
+     "generation": 7,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Berenice",
+     "birth-death": "unknown", 
+     "generation": 7,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Ptolemy Memphites", 
+     "birth-death": "unknown", 
+     "generation": 7,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Ptolemy IX Lathyros",
+     "birth-death": "143-81 BC",
+     "generation": 8,
+     "murdered?": false,
+     "familial-ruler?": true},
+
+    {"name": "Ptolemy X Alexander I", 
+     "birth-death": "death: 88 BC", 
+     "generation": 8,
+     "murdered?": false,
+     "familial-ruler?": true},
+
+    {"name": "Cleopatra IV", 
+     "birth-death": "138-112 BC", 
+     "generation": 8,
+     "murdered?": true,
+     "familial-ruler?": true},
+     
+    {"name": "Cleopatra Selene", 
+     "birth-death": "135-69 BC", 
+     "generation": 8,
+     "murdered?": true,
+     "familial-ruler?": false},
+
+    {"name": "Tryphaena", 
+     "birth-death": "141-111 BC", 
+     "generation": 8,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Antiochus IX Cyzicenus", 
+     "birth-death": "unknown-96 BC", 
+     "generation": 8,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Ptolemy XII Auletes", 
+     "birth-death": "117-51 BC", 
+     "generation": 9,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Ptolemy of Cyprus", 
+     "birth-death": "116-58 BC", 
+     "generation": 9,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Ptolemy XI Alexander II", 
+     "birth-death": "115-80 BC", 
+     "generation": 9,
+     "murdered?": true,
+     "familial-ruler?": false},
+
+    {"name": "Berenice III", 
+     "birth-death": "120-80 BC", 
+     "generation": 9,
+     "murdered?": true,
+     "familial-ruler?": true},
+
+    {"name": "Cleopatra V Tryphaena", 
+     "birth-death": "95-69 BC", 
+     "generation": 10,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Berenice IV Epiphaneia", 
+     "birth-death": "77-55 BC", 
+     "generation": 11,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Cleopatra VII Philopator", 
+     "birth-death": "69-30 BC", 
+     "generation": 11,
+     "murdered?": false,
+     "familial-ruler?": false},
+
+    {"name": "Arsinoë IV", 
+     "birth-death": "68-41 BC", 
+     "generation": 11,
+     "murdered?": false,
+     "familial-ruler?": true},
+
+    {"name": "Ptolemy XIII Theos Philopator", 
+     "birth-death": "62-47 BC", 
+     "generation": 11, 
+     "murdered?": false,
+     "familial-ruler?": true},
+
+    {"name": "Ptolemy XIV", 
+     "birth-death": "60-44 BC", 
+     "generation": 11,
+     "murdered?": false,
+     "familial-ruler?": false}    
   ],
   "links": [
     {"source": 0, "target": 1, "type": "marriage"},
@@ -307,7 +402,46 @@
     {"source": 40, "target": 46, "type": "child"},
 
     {"source": 43, "target": 45, "type": "marriage"},
-    {"source": 43, "target": 46, "type": "marriage"}
+    {"source": 43, "target": 46, "type": "marriage"},
+
+    {"source": 3, "target": 4, "type": "corule"},
+
+    {"source": 13, "target": 4, "type": "corule"},
+
+    {"source": 14, "target": 10, "type": "corule"},
+
+    {"source": 15, "target": 16, "type": "corule"},
+
+    {"source": 19, "target": 20, "type": "corule"},
+
+    {"source": 19, "target": 21, "type": "corule"},
+
+    {"source": 23, "target": 21, "type": "corule"},
+
+    {"source": 29, "target": 27, "type": "corule"},
+
+    {"source": 30, "target": 27, "type": "corule"},
+
+    {"source": 36, "target": 27, "type": "corule"},
+
+    {"source": 35, "target": 38, "type": "corule"},
+
+    {"source": 42, "target": 44, "type": "corule"}
+    
+
+
+    
+    
+    
+    
+
+    
+    
+    
+
+    
+
+
     
     
     
