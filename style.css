@@ -20,7 +20,7 @@
 
 .node text {
   font: 20px helvetica;
-  display: inline;
+  display: none;
   stroke: pink;
   fill: pink;
   z-index: 1000;

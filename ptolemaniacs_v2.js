@@ -60,6 +60,8 @@ d3.json("data.json", function (error, json) {
           return "red";
         case "marriage":
           return "blue";
+        case "corule":
+          return "green";
       }
     });
 

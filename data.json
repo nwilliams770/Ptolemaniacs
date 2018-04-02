@@ -398,54 +398,35 @@
     {"source": 40, "target": 44, "type": "child"},
     {"source": 41, "target": 45, "type": "child"},
     {"source": 40, "target": 45, "type": "child"},
-    {"source": 41, "target": 46, "type": "child"},
-    {"source": 40, "target": 46, "type": "child"},
+    {"source": 41, "target": 45, "type": "child"},
+    {"source": 40, "target": 44, "type": "child"},
 
+    {"source": 43, "target": 44, "type": "marriage"},
     {"source": 43, "target": 45, "type": "marriage"},
-    {"source": 43, "target": 46, "type": "marriage"},
 
-    {"source": 3, "target": 4, "type": "corule"},
+    {"source": 3, "target": 2, "type": "corule"},
 
-    {"source": 13, "target": 4, "type": "corule"},
+    {"source": 13, "target": 3, "type": "corule"},
 
     {"source": 14, "target": 10, "type": "corule"},
 
     {"source": 15, "target": 16, "type": "corule"},
 
-    {"source": 19, "target": 20, "type": "corule"},
 
-    {"source": 19, "target": 21, "type": "corule"},
+    {"source": 22, "target": 23, "type": "corule"},
 
-    {"source": 23, "target": 21, "type": "corule"},
+    {"source": 22, "target": 24, "type": "corule"},
 
-    {"source": 29, "target": 27, "type": "corule"},
+    {"source": 24, "target": 26, "type": "corule"},
 
-    {"source": 30, "target": 27, "type": "corule"},
+    {"source": 30, "target": 32, "type": "corule"},
 
-    {"source": 36, "target": 27, "type": "corule"},
+    {"source": 30, "target": 33, "type": "corule"},
 
-    {"source": 35, "target": 38, "type": "corule"},
+    {"source": 31, "target": 39, "type": "corule"},
 
-    {"source": 42, "target": 44, "type": "corule"}
-    
+    {"source": 40, "target": 36, "type": "corule"},
 
-
-    
-    
-    
-    
-
-    
-    
-    
-
-    
-
-
-    
-    
-    
-    
-        
+    {"source": 43, "target": 44, "type": "corule"}    
   ]
 }
