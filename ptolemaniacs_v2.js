@@ -10,7 +10,7 @@ var svg = d3.select("#chart")
 
 var force = d3.forceSimulation()
 // preshipped force, simulates charged molecules where each repels or attracts until stable state
-  .force("charge", d3.forceManyBody().strength(-500).distanceMin(50).distanceMax(200))
+  .force("charge", d3.forceManyBody().strength(-2000).distanceMin(100).distanceMax(500))
   .force("link", d3.forceLink().id(function (d) { return d.index }))
   .force("center", d3.forceCenter(width / 2, height / 2))
   .force("y", d3.forceY(0.001))
@@ -70,32 +70,6 @@ d3.json("data.json", function (error, json) {
     .data(json.nodes)
     .enter().append("g")
     .attr("class", "node")
-    .style("fill", function (d) {
-      switch (d.generation) {
-        case 1:
-          return "0052d4";
-        case 2:
-          return "0d61d9";
-        case 3:
-          return "1f77df";
-        case 4:
-          return "3490e7";
-        case 5:
-          return "49a9ee";
-        case 6:
-          return "5dbff5";
-        case 7:
-          return "6bcdf8";
-        case 8:
-          return "79d8fb";
-        case 9:
-          return "84dffb";
-        case 10:
-          return "96e9fb";
-        case 11:
-          return "9cebfb";
-      }
-    })
     .on('dblclick', connectedNodes)
     .call(d3.drag()
       .on("start", dragBegin)
@@ -104,7 +78,34 @@ d3.json("data.json", function (error, json) {
 
 // add the actual circles to the nodes
   var circle = node.append('circle')
-    .attr('r', 10);
+    .attr('r', 20)
+    .style("stroke", "1px solid black")
+    .style("fill", function (d) {
+    switch (d.generation) {
+      case 1:
+        return "0052d4";
+      case 2:
+        return "0d61d9";
+      case 3:
+        return "1f77df";
+      case 4:
+        return "3490e7";
+      case 5:
+        return "49a9ee";
+      case 6:
+        return "5dbff5";
+      case 7:
+        return "6bcdf8";
+      case 8:
+        return "79d8fb";
+      case 9:
+        return "84dffb";
+      case 10:
+        return "96e9fb";
+      case 11:
+        return "9cebfb";
+    }
+  });
 
 // add labels to nodes, hover effect done in css
   var label = node.append("text")

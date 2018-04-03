@@ -1,6 +1,6 @@
 .link {
   stroke-opacity: 0.3;
-  stroke-width: 2px;
+  stroke-width: 5px;
   fill: none;
   /* stroke: pink; */
 }
@@ -9,9 +9,17 @@
    stroke-dasharray: 0,2 1;
 }
 
+.link.corule {
+  display: none;
+}
 
-.node:hover circle {
-  fill: pink;
+.node {
+  stroke: black;
+  stroke-width: 4px;
+}
+
+.node:hover {
+  fill: blue;
 }
 
 .node:hover text {
