@@ -13,26 +13,27 @@
   display: none;
 }
 
-.node {
+.node circle {
   stroke: black;
-  stroke-width: 4px;
+  stroke-width: 2px;
+  fill: white;
+  transition: 1s cubic-bezier(0.08, 0.32, 0.17, 0.93);
 }
 
-.node:hover {
-  fill: blue;
+.node:hover circle {
+  fill: yellowgreen;
 }
 
-.node:hover text {
+/* .node:hover text {
   display: inline;
-}
+} */
 
 .node text {
+  padding-left: 5px;
   font: 20px helvetica;
   display: none;
-  stroke: pink;
-  fill: pink;
+  stroke: black;
   z-index: 1000;
-  shadow: 2px 2px black;
 }
 
 #bg {

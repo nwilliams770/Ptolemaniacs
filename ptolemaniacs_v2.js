@@ -64,6 +64,7 @@ d3.json("data.json", function (error, json) {
           return "green";
       }
     });
+  const header = document.querySelector('#label');
 
 // add nodes, color based on generation
   var node = svg.selectAll(".node")
@@ -74,43 +75,45 @@ d3.json("data.json", function (error, json) {
     .call(d3.drag()
       .on("start", dragBegin)
       .on("drag", dragging)
-      .on("end", dragEnded));
+      .on("end", dragEnded))
+      .on("mouseover", function(d) {
+        header.innerHTML = d.name;
+      });
 
 // add the actual circles to the nodes
   var circle = node.append('circle')
     .attr('r', 20)
-    .style("stroke", "1px solid black")
-    .style("fill", function (d) {
-    switch (d.generation) {
-      case 1:
-        return "0052d4";
-      case 2:
-        return "0d61d9";
-      case 3:
-        return "1f77df";
-      case 4:
-        return "3490e7";
-      case 5:
-        return "49a9ee";
-      case 6:
-        return "5dbff5";
-      case 7:
-        return "6bcdf8";
-      case 8:
-        return "79d8fb";
-      case 9:
-        return "84dffb";
-      case 10:
-        return "96e9fb";
-      case 11:
-        return "9cebfb";
-    }
-  });
+    // .style("fill", function (d) {
+    // switch (d.generation) {
+    //   case 1:
+    //     return "0052d4";
+    //   case 2:
+    //     return "0d61d9";
+    //   case 3:
+    //     return "1f77df";
+    //   case 4:
+    //     return "3490e7";
+    //   case 5:
+    //     return "49a9ee";
+    //   case 6:
+    //     return "5dbff5";
+    //   case 7:
+    //     return "6bcdf8";
+    //   case 8:
+    //     return "79d8fb";
+    //   case 9:
+    //     return "84dffb";
+    //   case 10:
+    //     return "96e9fb";
+    //   case 11:
+    //     return "9cebfb";
+  //   // }
+  // });
 
 // add labels to nodes, hover effect done in css
   var label = node.append("text")
-    .attr("dx", 20)
     .attr("dy", ".35em")
+    .attr("dx", "1.5em")
     .attr("class", "text")
     .text(function (d) { return d.name; });
 
@@ -176,6 +179,10 @@ d3.json("data.json", function (error, json) {
       node.style("opacity", function (o) {
         return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
       });
+      label.style("display", function (o) {
+        return neighboring(d, o) | neighboring(o, d) ? "inline" : "";
+      });
+
       link.style("opacity", function (o) {
         return d.index == o.source.index | d.index == o.target.index ? 1 : 0.1;
       });
@@ -185,6 +192,7 @@ d3.json("data.json", function (error, json) {
       //Put them back to opacity=1
       node.style("opacity", 1);
       link.style("opacity", 1);
+      label.style("display", "none");
       toggle = 0;
     }
   }
