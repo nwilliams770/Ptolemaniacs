@@ -1,7 +1,6 @@
 .link {
   stroke-opacity: 0.3;
-  stroke-width: 5px;
-  fill: none;
+  stroke-width: 1.5px;
   /* stroke: pink; */
 }
 
@@ -17,20 +16,20 @@
   stroke: black;
   stroke-width: 2px;
   fill: white;
-  transition: 1s cubic-bezier(0.08, 0.32, 0.17, 0.93);
+  transition: 2s cubic-bezier(0.08, 0.32, 0.17, 0.93);
 }
 
 .node:hover circle {
   fill: yellowgreen;
 }
 
-/* .node:hover text {
-  display: inline;
-} */
+.node:hover text {
+  cursor: default;
+}
 
 .node text {
   padding-left: 5px;
-  font: 20px helvetica;
+  font: 16px helvetica;
   display: none;
   stroke: black;
   z-index: 1000;

@@ -29,29 +29,29 @@ d3.json("data.json", function (error, json) {
 // taken from Mike Bostock example
 
 // **** PLAY WITH ARGS HERE **** 
-  svg.append("svg:defs").selectAll("marker")
-    .data(["end"])      // Different link/path types can be defined here
-    .enter().append("svg:marker")    // This section adds in the arrows
-    .attr("id", String)
+  svg.append("defs").selectAll("marker")
+    .data(["child"])      // Different link/path types can be defined here
+    .enter().append("marker")    // This section adds in the arrows
+    .attr("id", function(d) { return d;})
     .attr("viewBox", "0 -5 10 10")
     .attr("refX", 15)
     .attr("refY", -1.5)
     .attr("markerWidth", 6)
     .attr("markerHeight", 6)
     .attr("orient", "auto")
-    .append("svg:path")
+    .append("path")
     .attr("d", "M0,-5L10,0L0,5")
     .attr("fill", "red");
 
 // add links, color based on type
-  var link = svg.selectAll('.link')
+  var link = svg.append("g").selectAll('.link')
     .data(json.links)
     .enter()
     .append("line")
     .attr("class", function (d) { return "link " + d.type; })
     .attr("marker-end", function (d) {
       if (d.type === 'child') {
-        return "url(#end)";
+        return "url(#child)";
       }
     })
     .style("stroke", function (d) {
@@ -82,7 +82,7 @@ d3.json("data.json", function (error, json) {
 
 // add the actual circles to the nodes
   var circle = node.append('circle')
-    .attr('r', 20)
+    .attr('r', 6)
     // .style("fill", function (d) {
     // switch (d.generation) {
     //   case 1:
@@ -113,7 +113,7 @@ d3.json("data.json", function (error, json) {
 // add labels to nodes, hover effect done in css
   var label = node.append("text")
     .attr("dy", ".35em")
-    .attr("dx", "1.5em")
+    .attr("dx", "1em")
     .attr("class", "text")
     .text(function (d) { return d.name; });
 
@@ -210,24 +210,25 @@ d3.json("data.json", function (error, json) {
 
 
   // const labels = document.querySelectorAll('.node text');
-  // const labelButton = document.querySelector('.bttn-labels');
+  const labelButton = document.querySelector('.bttn-labels');
   // let labelsShown = false;
 
-  // function toggleLabels() {
-  //  if (!labelsShown) {
-  //   labels.forEach(lab => {
-  //     lab.style.display = 'inline';
-  //   });
-  //  } else {
-  //    labels.forEach(lab => {
-  //      lab.style.display = 'none';
-  //    });
-  //  }
-  // labelsShown = !labelsShown;
-  // force.start();
-  // }
+  function filterMurders() {
+    d3.selectAll(".link").style("opacity", "0");
+    var nodes = svg.selectAll(".node");
+    var selected = nodes.filter(function (d) {
+      return d.murdered;
+    })
+    var notSelected = nodes.filter(function (d) {
+      return !(d.murdered);
+    })
+    console.log(selected);
+    notSelected.style('opacity', '0');
+    selected.selectAll('circle').style('fill', 'red');
+    selected.selectAll('text').style('display', 'inline');
+  }
 
-  // labelButton.addEventListener('click', toggleLabels);
+  labelButton.addEventListener('click', filterMurders);
   
 
 });
