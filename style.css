@@ -16,11 +16,7 @@
   stroke: black;
   stroke-width: 2px;
   fill: white;
-  transition: 2s cubic-bezier(0.08, 0.32, 0.17, 0.93);
-}
-
-.node:hover circle {
-  fill: yellowgreen;
+  transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);
 }
 
 .node:hover text {

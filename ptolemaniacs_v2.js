@@ -71,14 +71,22 @@ d3.json("data.json", function (error, json) {
     .data(json.nodes)
     .enter().append("g")
     .attr("class", "node")
+    .style('fill', 'white')
     .on('dblclick', connectedNodes)
     .call(d3.drag()
       .on("start", dragBegin)
       .on("drag", dragging)
       .on("end", dragEnded))
-      .on("mouseover", function(d) {
-        header.innerHTML = d.name;
-      });
+    .on("mouseover", function(d) {
+      header.innerHTML = d.name;
+      var circle = d3.select(this).select('circle');
+      circle.attr('data-color', `${circle.style("fill")}`)
+      circle.style('fill', 'yellowgreen');
+      })
+    .on("mouseleave", function (d) {
+      var circle = d3.select(this).select('circle');
+      circle.style('fill', `${circle.attr("data-color")}`);
+  });
 
 // add the actual circles to the nodes
   var circle = node.append('circle')
@@ -155,7 +163,8 @@ d3.json("data.json", function (error, json) {
 
 
 // NODE HIGHLIGHTING 
-  var toggle = 0;
+  var toggleConnections, toggleMurders = 1;
+
   //Create an array logging what is connected to what
   var linkedByIndex = {};
   for (i = 0; i < json.nodes.length; i++) {
@@ -173,7 +182,8 @@ d3.json("data.json", function (error, json) {
   }
 
   function connectedNodes() {
-    if (toggle == 0) {
+    if (toggleMurders === 0) return;
+    if (toggleConnections === 1) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(this).node().__data__;
       node.style("opacity", function (o) {
@@ -187,13 +197,13 @@ d3.json("data.json", function (error, json) {
         return d.index == o.source.index | d.index == o.target.index ? 1 : 0.1;
       });
       //Reduce the op
-      toggle = 1;
+      toggleConnections = 1;
     } else {
       //Put them back to opacity=1
       node.style("opacity", 1);
       link.style("opacity", 1);
       label.style("display", "none");
-      toggle = 0;
+      toggleConnections = 0;
     }
   }
 
@@ -213,8 +223,7 @@ d3.json("data.json", function (error, json) {
   const labelButton = document.querySelector('.bttn-labels');
   // let labelsShown = false;
 
-  function filterMurders() {
-    d3.selectAll(".link").style("opacity", "0");
+  function filterMurders(e) {
     var nodes = svg.selectAll(".node");
     var selected = nodes.filter(function (d) {
       return d.murdered;
@@ -222,10 +231,20 @@ d3.json("data.json", function (error, json) {
     var notSelected = nodes.filter(function (d) {
       return !(d.murdered);
     })
-    console.log(selected);
-    notSelected.style('opacity', '0');
-    selected.selectAll('circle').style('fill', 'red');
-    selected.selectAll('text').style('display', 'inline');
+    if (toggleMurders === 1) {
+      d3.selectAll(".link").style("opacity", "0");      
+      notSelected.style('opacity', '0');
+      selected.selectAll('circle').style('fill', 'red');
+      selected.selectAll('text').style('display', 'inline');
+      toggleMurders = 0;
+    } else {
+      d3.selectAll(".link").style("opacity", "1");            
+      notSelected.style('opacity', '1');
+      selected.selectAll('circle').style('fill', 'white');
+      selected.selectAll('text').style('display', 'none');
+      toggleMurders = 1;
+    }
+    
   }
 
   labelButton.addEventListener('click', filterMurders);
