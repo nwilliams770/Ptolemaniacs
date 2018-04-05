@@ -164,9 +164,8 @@ d3.json("data.json", function (error, json) {
 // NODE HIGHLIGHTING 
   var toggleConnections = 1;
   var toggleMurders = 1;
-
-  console.log(toggleConnections);
-  console.log(toggleMurders);
+  var toggleCorules = 1;
+  var toggleLabels = 1;
 
   //Create an array logging what is connected to what
   var linkedByIndex = {};
@@ -211,20 +210,13 @@ d3.json("data.json", function (error, json) {
   }
 
   // ETC FUNCTIONALITY *****
-  function filterRegencies() {
-    var nodes = svg.selectAll('.node');
-    var selected = nodes.filter(function (d, i) {
-      return d.generation != 3;
-    });
-    selected.style('opacity', '0');
-    d3.selectAll(".node").transition().duration(5000);
-  }
-
-
 
   const labelButton = document.querySelector('.bttn-labels');
+  const murdersButton = document.querySelector('.bttn-murders');
+  const corulesButton = document.querySelector('.bttn-corules');
+  
   // let labelsShown = false;
-  function filterMurders(e) {
+  function filterMurders() {
     var nodes = svg.selectAll(".node");
     var selected = nodes.filter(function (d) {
       return d.murdered;
@@ -245,10 +237,43 @@ d3.json("data.json", function (error, json) {
       selected.selectAll('text').style('display', 'none');
       toggleMurders = 1;
     }
-    
   }
 
-  labelButton.addEventListener('click', filterMurders);
+  function filterCorules() {
+    if (toggleCorules === 1) {
+      d3.selectAll(".link").style("opacity", function (d) {
+        return d.type === "corule" ? "1" : "0"
+      });   
+      d3.selectAll(".node circle").style("opacity", function (d) {
+        return d.familial_ruler ? "1" : "0"
+      })
+      d3.selectAll(".node text").style("display", function (d) {
+        return d.familial_ruler ? "inline" : "none"
+      })
+      toggleCorules = 0;
+    } else {
+      d3.selectAll(".link").style("opacity", function (d) {
+        return d.familial_ruler ? "0" : "1"
+      });            
+      d3.selectAll(".node circle").style("opacity", "1");
+      d3.selectAll(".node text").style("display", "none");
+      toggleCorules = 1;
+    }
+  }
+
+  function showLabels() {
+    if (toggleLabels === 1) {
+      d3.selectAll(".node text").style("display", "inline");
+      toggleLabels = 0;
+    } else {
+      d3.selectAll(".node text").style("display", "none");
+      toggleLabels = 1;
+    }
+  }
+  murdersButton.addEventListener('click', filterMurders);
+  corulesButton.addEventListener('click', filterCorules);
+  labelButton.addEventListener('click', showLabels);
+  
   
 
 });

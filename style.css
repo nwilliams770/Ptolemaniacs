@@ -2,14 +2,17 @@
   stroke-opacity: 0.3;
   stroke-width: 1.5px;
   /* stroke: pink; */
+  transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);  
 }
+
+
 
 .link.marriage {
    stroke-dasharray: 0,2 1;
 }
 
 .link.corule {
-  display: none;
+  opacity: 0;
 }
 
 .node circle {
@@ -29,6 +32,7 @@
   display: none;
   fill: black;
   z-index: 1000;
+  transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);  
 }
 
 #bg {
