@@ -27,7 +27,7 @@
   padding-left: 5px;
   font: 16px helvetica;
   display: none;
-  stroke: black;
+  fill: black;
   z-index: 1000;
 }
 

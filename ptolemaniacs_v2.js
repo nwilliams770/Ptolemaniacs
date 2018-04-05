@@ -27,8 +27,6 @@ d3.json("data.json", function (error, json) {
 
 // add directional markers
 // taken from Mike Bostock example
-
-// **** PLAY WITH ARGS HERE **** 
   svg.append("defs").selectAll("marker")
     .data(["child"])      // Different link/path types can be defined here
     .enter().append("marker")    // This section adds in the arrows
@@ -64,6 +62,7 @@ d3.json("data.json", function (error, json) {
           return "green";
       }
     });
+
   const header = document.querySelector('#label');
 
 // add nodes, color based on generation
@@ -163,7 +162,11 @@ d3.json("data.json", function (error, json) {
 
 
 // NODE HIGHLIGHTING 
-  var toggleConnections, toggleMurders = 1;
+  var toggleConnections = 1;
+  var toggleMurders = 1;
+
+  console.log(toggleConnections);
+  console.log(toggleMurders);
 
   //Create an array logging what is connected to what
   var linkedByIndex = {};
@@ -197,13 +200,13 @@ d3.json("data.json", function (error, json) {
         return d.index == o.source.index | d.index == o.target.index ? 1 : 0.1;
       });
       //Reduce the op
-      toggleConnections = 1;
+      toggleConnections = 0;
     } else {
       //Put them back to opacity=1
       node.style("opacity", 1);
       link.style("opacity", 1);
       label.style("display", "none");
-      toggleConnections = 0;
+      toggleConnections = 1;
     }
   }
 
@@ -219,10 +222,8 @@ d3.json("data.json", function (error, json) {
 
 
 
-  // const labels = document.querySelectorAll('.node text');
   const labelButton = document.querySelector('.bttn-labels');
   // let labelsShown = false;
-
   function filterMurders(e) {
     var nodes = svg.selectAll(".node");
     var selected = nodes.filter(function (d) {
