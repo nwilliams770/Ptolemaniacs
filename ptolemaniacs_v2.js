@@ -175,7 +175,9 @@ d3.json("data.json", function (error, json) {
   
 
   json.links.forEach(function (d) {
-    linkedByIndex[d.source.index + "," + d.target.index] = 1;
+    if (d.type === "child" || d.type === "marriage") {
+      linkedByIndex[d.source.index + "," + d.target.index] = 1;
+    }
   });
 
   //This function looks up whether a pair are neighbours
@@ -188,6 +190,10 @@ d3.json("data.json", function (error, json) {
     if (toggleConnections === 1) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(this).node().__data__;
+      console.log("HERE's D!!!");
+      console.log(d);
+
+      console.log(linkedByIndex);
       node.style("opacity", function (o) {
         return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
       });
@@ -210,6 +216,13 @@ d3.json("data.json", function (error, json) {
   }
 
   // ETC FUNCTIONALITY *****
+
+  console.log(d3.selectAll(".node").filter(function (d) {
+    return d.rule;
+  }).sort(function (x, y) {
+    return x.rule > y.rule;
+  }));
+
 
   const labelButton = document.querySelector('.bttn-labels');
   const murdersButton = document.querySelector('.bttn-murders');
@@ -278,6 +291,10 @@ d3.json("data.json", function (error, json) {
       toggleLabels = 1;
     }
   }
+
+
+
+
   murdersButton.addEventListener('click', filterMurders);
   corulesButton.addEventListener('click', filterCorules);
   labelButton.addEventListener('click', showLabels);
