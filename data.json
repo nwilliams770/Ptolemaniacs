@@ -5,7 +5,8 @@
      "birth-death": "305-282 BC",
      "generation": 1,
      "murdered": false,
-     "familial_ruler": false},
+     "familial_ruler": false,
+     "rule": 1},
 
     {"name": "Berenice I", 
      "birth-death": "340-268 BC", 
@@ -17,13 +18,15 @@
      "birth-death": "309-246 BC", 
      "generation": 2,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 2},
 
     {"name": "Arsinoë II", 
      "birth-death": "316-260 BC", 
      "generation": 2,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 2},
 
     {"name": "King Lysimachus", 
      "birth-death": "360-281 BC", 
@@ -31,7 +34,7 @@
      "murdered": true,
      "familial_ruler": false},
   
-    {"name": "Arsinoë I", 
+    {"name": "Arsinoë I",
      "birth-death": "316-260 BC", 
      "generation": 2,
      "murdered": false,
@@ -61,11 +64,12 @@
      "murdered": true,
      "familial_ruler": false},
 
-    {"name": "Ptolemy III Euergetes", 
+    {"name": "Ptolemy III Euergetes",
      "birth-death": "246-222 BC", 
      "generation": 3,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 3},
 
     {"name": "Lysimachus of Egypt", 
      "birth-death": "unknown", 
@@ -89,19 +93,22 @@
      "birth-death": "267-221 BC", 
      "generation": 3,
      "murdered": true,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 3},
 
-    {"name": "Arsinoë III", 
+    {"name": "Arsinoë III",
      "birth-death": "267-221 BC", 
      "generation": 4,
      "murdered": true,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 4},
 
     {"name": "Ptolemy IV Philopator", 
      "birth-death": "267-221 BC", 
      "generation": 4,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 4},
 
     {"name": "Alexander", 
      "birth-death": "267-221 BC", 
@@ -121,11 +128,12 @@
      "murdered": false,
      "familial_ruler": false},
 
-    {"name": "Ptolemy V Epiphanes", 
+    {"name": "Ptolemy V Epiphanes",
      "birth-death": "204-181 BC", 
      "generation": 5,
      "murdered": false,
-     "familial_ruler": false},
+     "familial_ruler": false,
+     "rule": 5},
     
      {"name": "Cleopatra I", 
      "birth-death": "204-176 BC", 
@@ -137,21 +145,24 @@
      "birth-death": "185-116 BC", 
      "generation": 6,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 8},
 
     {"name": "Ptolemy VI Philometor", 
      "birth-death": "186-145 BC", 
      "generation": 6,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 6},
 
     {"name": "Ptolemy VIII Physcon", 
      "birth-death": "182-116 BC", 
      "generation": 6,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 7},
 
-    {"name": "Ptolemy VII Neos Philopator", 
+    {"name": "Ptolemy VII Neos Philopator",
      "birth-death": "unknown", 
      "generation": 7,
      "murdered": false,
@@ -161,7 +172,8 @@
      "birth-death": "160-101 BC",
      "generation": 7,
      "murdered": true,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 9},
 
     {"name": "Cleopatra Thea", 
      "birth-death": "164-121 BC", 
@@ -185,13 +197,15 @@
      "birth-death": "143-81 BC",
      "generation": 8,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 9},
 
     {"name": "Ptolemy X Alexander I", 
      "birth-death": "death: 88 BC", 
      "generation": 8,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 10},
 
     {"name": "Cleopatra IV", 
      "birth-death": "138-112 BC", 
@@ -211,7 +225,7 @@
      "murdered": false,
      "familial_ruler": false},
 
-    {"name": "Antiochus IX Cyzicenus", 
+    {"name": "Antiochus IX Cyzicenus",
      "birth-death": "unknown-96 BC", 
      "generation": 8,
      "murdered": false,
@@ -233,15 +247,17 @@
      "birth-death": "115-80 BC", 
      "generation": 9,
      "murdered": true,
-     "familial_ruler": false},
+     "familial_ruler": false,
+     "rule": 11},
 
     {"name": "Berenice III", 
      "birth-death": "120-80 BC", 
      "generation": 9,
      "murdered": true,
-     "familial_ruler": true},
-
-    {"name": "Cleopatra V Tryphaena", 
+     "familial_ruler": true,
+     "rule": 10},
+ 
+    {"name": "Cleopatra V Tryphaena",
      "birth-death": "95-69 BC", 
      "generation": 10,
      "murdered": false,
@@ -275,7 +291,14 @@
      "birth-death": "60-44 BC", 
      "generation": 11,
      "murdered": false,
-     "familial_ruler": false}    
+     "familial_ruler": false},
+    
+    {"name": "Ptolemy XV Caesarion",
+     "birth-death": "60-44 BC",
+     "generation": 12,
+     "murdered": true,
+     "familial_ruler": false
+    }
   ],
   "links": [
     {"source": 0, "target": 1, "type": "marriage"},
@@ -400,6 +423,8 @@
     {"source": 40, "target": 45, "type": "child"},
     {"source": 41, "target": 45, "type": "child"},
     {"source": 40, "target": 44, "type": "child"},
+    {"source": 42, "target": 46, "type": "child"},
+    
 
     {"source": 43, "target": 44, "type": "marriage"},
     {"source": 43, "target": 45, "type": "marriage"},
@@ -427,6 +452,52 @@
 
     {"source": 40, "target": 36, "type": "corule"},
 
-    {"source": 43, "target": 44, "type": "corule"}    
+    {"source": 43, "target": 44, "type": "corule"},
+    
+    {"source": 1, "target": 2, "type": "rule"},   
+    {"source": 1, "target": 3, "type": "rule"},
+
+    {"source": 2, "target": 10, "type": "rule"},   
+    {"source": 3, "target": 10, "type": "rule"},
+    {"source": 2, "target": 14, "type": "rule"},
+    {"source": 3, "target": 14, "type": "rule"},
+
+    {"source": 2, "target": 15, "type": "rule"},   
+    {"source": 3, "target": 15, "type": "rule"},
+    {"source": 2, "target": 16, "type": "rule"},
+    {"source": 3, "target": 16, "type": "rule"},
+
+    {"source": 15, "target": 20, "type": "rule"}, 
+    {"source": 16, "target": 20, "type": "rule"},
+
+    {"source": 20, "target": 23, "type": "rule"}, 
+
+    {"source": 23, "target": 24, "type": "rule"}, 
+
+    {"source": 24, "target": 22, "type": "rule"}, 
+
+    {"source": 22, "target": 26, "type": "rule"}, 
+    {"source": 22, "target": 30, "type": "rule"},
+
+    {"source": 30, "target": 32, "type": "rule"},
+    {"source": 30, "target": 33, "type": "rule"},
+
+    {"source": 30, "target": 31, "type": "rule"}, 
+    {"source": 30, "target": 39, "type": "rule"},
+
+    {"source": 31, "target": 3, "type": "rule"},
+    {"source": 39, "target": 38, "type": "rule"},
+
+    {"source": 38, "target": 36, "type": "rule"}, 
+    {"source": 38, "target": 40, "type": "rule"},
+
+    {"source": 36, "target": 42, "type": "rule"}, 
+    {"source": 40, "target": 42, "type": "rule"},
+
+    {"source": 42, "target": 44, "type": "rule"},
+    {"source": 42, "target": 45, "type": "rule"},
+    {"source": 42, "target": 46, "type": "rule"},
+
+    {"source": 46, "target": 43, "type": "rule"}
   ]
 }
