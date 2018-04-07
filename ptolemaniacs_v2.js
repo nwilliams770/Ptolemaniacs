@@ -78,6 +78,7 @@ d3.json("data.json", function (error, json) {
       .on("end", dragEnded))
     .on("mouseover", function(d) {
       header.innerHTML = d.name;
+      showHeader(d);
       var circle = d3.select(this).select('circle');
       circle.attr('data-color', `${circle.style("fill")}`)
       circle.style('fill', 'yellowgreen');
@@ -190,10 +191,6 @@ d3.json("data.json", function (error, json) {
     if (toggleConnections === 1) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(this).node().__data__;
-      console.log("HERE's D!!!");
-      console.log(d);
-
-      console.log(linkedByIndex);
       node.style("opacity", function (o) {
         return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
       });
@@ -217,16 +214,20 @@ d3.json("data.json", function (error, json) {
 
   // ETC FUNCTIONALITY *****
 
-  console.log(d3.selectAll(".node").filter(function (d) {
-    return d.rule;
-  }).sort(function (x, y) {
-    return x.rule > y.rule;
-  }));
+  function showHeader(node) {
+    var parents = d3.selectAll('.node').filter(function (d) {
+      console.log(node);
+      return neighboring(d, node) || neighboring(node, d);
+    })
+    console.log(parents);
+  }
 
 
   const labelButton = document.querySelector('.bttn-labels');
   const murdersButton = document.querySelector('.bttn-murders');
   const corulesButton = document.querySelector('.bttn-corules');
+  const lineOfRuleButton = document.querySelector('.bttn-rule');
+  var animDuration = 500;
   
   // let labelsShown = false;
   function filterMurders() {
@@ -279,10 +280,7 @@ d3.json("data.json", function (error, json) {
   }
 
   function showLabels() {
-    if (toggleMurders === 0 || toggleCorules === 0) {
-      console.log("we made it!");
-      return;
-    }
+    if (toggleMurders === 0 || toggleCorules === 0) return;
     if (toggleLabels === 1) {
       d3.selectAll(".node text").style("display", "inline");
       toggleLabels = 0;
@@ -292,11 +290,34 @@ d3.json("data.json", function (error, json) {
     }
   }
 
+  function filterLineOfRule() {
+
+  }
+
+  function visitNodes (nodes) {
+    var lineage = {};
+
+    var nodes = d3.selectAll(".node");
+
+    for (let i = 1; i < 11; i++) {
+      lineage[i] = nodes.map(function (d) {
+        return d.rule === i;
+      })
+    }
+
+    console.log(lineage);
+
+   
+  }
+
+
+
 
 
 
   murdersButton.addEventListener('click', filterMurders);
   corulesButton.addEventListener('click', filterCorules);
   labelButton.addEventListener('click', showLabels);
+  lineOfRuleButton.addEventListener('click', visitNodes);
 });
 
