@@ -60,6 +60,8 @@ d3.json("data.json", function (error, json) {
           return "blue";
         case "corule":
           return "green";
+        case "rule":
+          return "purple";
       }
     });
 
@@ -78,7 +80,7 @@ d3.json("data.json", function (error, json) {
       .on("end", dragEnded))
     .on("mouseover", function(d) {
       header.innerHTML = d.name;
-      showHeader(d);
+      // showHeader(d);
       var circle = d3.select(this).select('circle');
       circle.attr('data-color', `${circle.style("fill")}`)
       circle.style('fill', 'yellowgreen');
@@ -290,22 +292,59 @@ d3.json("data.json", function (error, json) {
     }
   }
 
-  function filterLineOfRule() {
+  function filterLineOfRule(i) {
 
+    d3.selectAll(".link").transition().duration(10)
+      .style("opacity", "0");
+
+    var links = d3.selectAll(".link.rule").filter(function (d) { 
+        return d.target.rule === i;
+    });
+
+
+  
+
+
+    links.transition().duration(1000)
+      .style("opacity", "1");
+    
+
+    d3.selectAll(".link").filter(function (d) {
+      return d.type === "rule";
+    }).style("opacity", "1");
+    
+
+    var circles = d3.selectAll(".node circle").filter(function (d) {
+      return d.rule === i;
+    })
+
+
+    var text = d3.selectAll(".node text").filter(function (d) {
+      return d.rule === i;
+    })
+
+    circles.transition().duration(1000).delay(1000 * i)
+      .style("fill", "pink");
+
+    text.transition().duration(1000).delay(1000 * i).style("display", "inline");
+      
+    
   }
+
+
 
   function visitNodes (nodes) {
     var lineage = {};
 
     var nodes = d3.selectAll(".node");
 
-    for (let i = 1; i < 11; i++) {
-      lineage[i] = nodes.map(function (d) {
-        return d.rule === i;
-      })
+    for (let i = 1; i < 16; i++) {
+      filterLineOfRule(i);
     }
 
-    console.log(lineage);
+
+
+   
 
    
   }
