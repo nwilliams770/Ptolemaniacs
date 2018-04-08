@@ -235,7 +235,8 @@
      "birth-death": "117-51 BC", 
      "generation": 9,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+      "rule": 12},
 
     {"name": "Ptolemy of Cyprus", 
      "birth-death": "116-58 BC", 
@@ -261,7 +262,8 @@
      "birth-death": "95-69 BC", 
      "generation": 10,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+      "rule": 13},
 
     {"name": "Berenice IV Epiphaneia", 
      "birth-death": "77-55 BC", 
@@ -273,32 +275,36 @@
      "birth-death": "69-30 BC", 
      "generation": 11,
      "murdered": false,
-     "familial_ruler": false},
+     "familial_ruler": false,
+      "rule": 14},
 
     {"name": "Arsinoë IV", 
      "birth-death": "68-41 BC", 
      "generation": 11,
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 15},
 
     {"name": "Ptolemy XIII Theos Philopator", 
      "birth-death": "62-47 BC", 
      "generation": 11, 
      "murdered": false,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 14},
 
     {"name": "Ptolemy XIV", 
      "birth-death": "60-44 BC", 
      "generation": 11,
      "murdered": false,
-     "familial_ruler": false},
+     "familial_ruler": false,
+     "rule": 14},
     
     {"name": "Ptolemy XV Caesarion",
      "birth-death": "60-44 BC",
      "generation": 12,
      "murdered": true,
-     "familial_ruler": false
-    }
+     "familial_ruler": false,
+     "rule": 14}
   ],
   "links": [
     {"source": 0, "target": 1, "type": "marriage"},
@@ -454,18 +460,18 @@
 
     {"source": 43, "target": 44, "type": "corule"},
     
-    {"source": 1, "target": 2, "type": "rule"},   
-    {"source": 1, "target": 3, "type": "rule"},
+    {"source": 0, "target": 2, "type": "rule"},   
+    {"source": 0, "target": 3, "type": "rule"},
 
     {"source": 2, "target": 10, "type": "rule"},   
     {"source": 3, "target": 10, "type": "rule"},
     {"source": 2, "target": 14, "type": "rule"},
     {"source": 3, "target": 14, "type": "rule"},
 
-    {"source": 2, "target": 15, "type": "rule"},   
-    {"source": 3, "target": 15, "type": "rule"},
-    {"source": 2, "target": 16, "type": "rule"},
-    {"source": 3, "target": 16, "type": "rule"},
+    {"source": 10, "target": 15, "type": "rule"},   
+    {"source": 14, "target": 15, "type": "rule"},
+    {"source": 10, "target": 16, "type": "rule"},
+    {"source": 14, "target": 16, "type": "rule"},
 
     {"source": 15, "target": 20, "type": "rule"}, 
     {"source": 16, "target": 20, "type": "rule"},
