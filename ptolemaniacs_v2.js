@@ -297,21 +297,19 @@ d3.json("data.json", function (error, json) {
     d3.selectAll(".link").transition().duration(10)
       .style("opacity", "0");
 
-    var links = d3.selectAll(".link.rule").filter(function (d) { 
-        return d.target.rule === i;
-    });
+    var links = d3.selectAll(".link.rule");
+
 
 
   
 
 
-    links.transition().duration(1000)
-      .style("opacity", "1");
+    links.transition().duration(1000).style("opacity", "1");
     
 
-    d3.selectAll(".link").filter(function (d) {
-      return d.type === "rule";
-    }).style("opacity", "1");
+    // d3.selectAll(".link").filter(function (d) {
+    //   return d.type === "rule";
+    // }).style("opacity", "1");
     
 
     var circles = d3.selectAll(".node circle").filter(function (d) {
