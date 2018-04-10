@@ -93,32 +93,15 @@ d3.json("data.json", function (error, json) {
 // add the actual circles to the nodes
   var circle = node.append('circle')
     .attr('r', 6)
-    // .style("fill", function (d) {
-    // switch (d.generation) {
-    //   case 1:
-    //     return "0052d4";
-    //   case 2:
-    //     return "0d61d9";
-    //   case 3:
-    //     return "1f77df";
-    //   case 4:
-    //     return "3490e7";
-    //   case 5:
-    //     return "49a9ee";
-    //   case 6:
-    //     return "5dbff5";
-    //   case 7:
-    //     return "6bcdf8";
-    //   case 8:
-    //     return "79d8fb";
-    //   case 9:
-    //     return "84dffb";
-    //   case 10:
-    //     return "96e9fb";
-    //   case 11:
-    //     return "9cebfb";
-  //   // }
-  // });
+    .style("fill", function (d) {
+    if (d.generation < 4) {
+      return "#abcb42";
+    } else if (d.generation > 4 && d.generation < 7) {
+      return "#feaf17";
+    } else {
+      return "#f35001";
+    }
+    });
 
 // add labels to nodes, hover effect done in css
   var label = node.append("text")
@@ -169,6 +152,7 @@ d3.json("data.json", function (error, json) {
   var toggleMurders = 1;
   var toggleCorules = 1;
   var toggleLabels = 1;
+  var toggleRule = 1;
 
   //Create an array logging what is connected to what
   var linkedByIndex = {};
@@ -259,7 +243,7 @@ d3.json("data.json", function (error, json) {
   }
 
   function filterCorules() {
-    if (toggleMurders === 0) return;    
+    if (toggleMurders === 0 || (toggleCorules === 0 && toggleRule === 0)) return;    
     if (toggleCorules === 1) {
       d3.selectAll(".link").style("opacity", function (d) {
         return d.type === "corule" ? "1" : "0"
@@ -292,30 +276,18 @@ d3.json("data.json", function (error, json) {
     }
   }
 
-  function filterLineOfRule(i) {
 
+
+  function filterLineOfRule(i) {
     d3.selectAll(".link").transition().duration(10)
       .style("opacity", "0");
 
     var links = d3.selectAll(".link.rule");
-
-
-
-  
-
-
     links.transition().duration(1000).style("opacity", "1");
     
-
-    // d3.selectAll(".link").filter(function (d) {
-    //   return d.type === "rule";
-    // }).style("opacity", "1");
-    
-
     var circles = d3.selectAll(".node circle").filter(function (d) {
       return d.rule === i;
     })
-
 
     var text = d3.selectAll(".node text").filter(function (d) {
       return d.rule === i;
@@ -325,26 +297,40 @@ d3.json("data.json", function (error, json) {
       .style("fill", "pink");
 
     text.transition().duration(1000).delay(1000 * i).style("display", "inline");
-      
-    
+  }
+
+  function colorizeNodes() {
+    d3.selectAll(".node").style("opacity", function (d) { 
+      if (d.generation < 4) {
+        return "#abcb42";
+      } else if (d.generation > 4 && d.generation < 7) {
+        return "#feaf17";
+      } else {
+        return "#f35001";
+      }
+    });
   }
 
 
-
-  function visitNodes (nodes) {
-    var lineage = {};
-
-    var nodes = d3.selectAll(".node");
-
-    for (let i = 1; i < 16; i++) {
-      filterLineOfRule(i);
+  function visitNodes () {
+    if (toggleMurders === 0 || toggleConnections === 0) return;
+    if (toggleRule === 1) {
+      for (let i = 1; i < 16; i++) {
+        filterLineOfRule(i);
+      }
+      toggleRule = 0;   
+    } else {
+      d3.selectAll(".link").style("opacity", function (d) {
+        if (d.type === "child" || d.type === "marriage") {
+          return "1";
+        } else {
+          return "0";
+        }
+      colorizeNodes();
+      })
+      toggleRule = 1;
     }
 
-
-
-   
-
-   
   }
 
 

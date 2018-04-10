@@ -11,16 +11,13 @@
    stroke-dasharray: 0,2 1;
 }
 
-.link {
-  opacity: 0;
-}
-
-.link.rule {
-  opacity: 1;
-}
-/* .link.corule, .link.rule {
+/* .link {
   opacity: 0;
 } */
+
+.link.corule, .link.rule {
+  opacity: 0;
+}
 
 .node circle {
   stroke: black;
