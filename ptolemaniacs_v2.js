@@ -32,8 +32,8 @@ d3.json("data.json", function (error, json) {
     .enter().append("marker")    // This section adds in the arrows
     .attr("id", function(d) { return d;})
     .attr("viewBox", "0 -5 10 10")
-    .attr("refX", 15)
-    .attr("refY", -1.5)
+    .attr("refX", 20)
+    .attr("refY", -0.5)
     .attr("markerWidth", 6)
     .attr("markerHeight", 6)
     .attr("orient", "auto")
@@ -92,7 +92,7 @@ d3.json("data.json", function (error, json) {
 
 // add the actual circles to the nodes
   var circle = node.append('circle')
-    .attr('r', 6)
+    .attr('r', 12)
     .style("fill", function (d) {
     if (d.generation < 4) {
       return "#abcb42";
