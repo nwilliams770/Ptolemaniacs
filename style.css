@@ -40,5 +40,12 @@
 }
 
 #bg {
-  height: 100vh;
+  width: 2500px;
+  position: absolute;
+  z-index: -50;
 }
+
+.bttn--container {
+  display: flex;
+}
+

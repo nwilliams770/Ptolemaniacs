@@ -2,11 +2,19 @@
 
 var width =1920,
   height = 1000;
+  aspect = width / height;
 
 var svg = d3.select("#chart")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
+
+d3.select(window)
+  .on("resize", function () {
+    var targetWidth = svg.node().getBoundingClientRect().width;
+    chart.attr("width", targetWidth);
+    chart.attr("height", targetWidth / aspect);
+  });
 
 var force = d3.forceSimulation()
 // preshipped force, simulates charged molecules where each repels or attracts until stable state
