@@ -6,23 +6,25 @@ var width =1920,
 
 var svg = d3.select("#chart")
   .append("svg")
-  .attr("width", width)
-  .attr("height", height);
+  // .attr("width", width)
+  // .attr("height", height);
+  .attr("viewBox", "0 0 " + width + " " + height)
+  .attr("preserveAspectRatio", "xMidYMid meet");
 
-d3.select(window)
-  .on("resize", function () {
-    var targetWidth = svg.node().getBoundingClientRect().width;
-    chart.attr("width", targetWidth);
-    chart.attr("height", targetWidth / aspect);
-  });
 
 var force = d3.forceSimulation()
 // preshipped force, simulates charged molecules where each repels or attracts until stable state
-  .force("charge", d3.forceManyBody().strength(-2000).distanceMin(100).distanceMax(500))
+  // .force("charge", d3.forceManyBody().strength(-10000).distanceMin(-200).distanceMax(800))
+  .force("charge", d3.forceManyBody().strength(-100))
+  .force('collision', d3.forceCollide().radius(function (d) {
+    return d.r;
+  }))
+  
+
   .force("link", d3.forceLink().id(function (d) { return d.index }))
   .force("center", d3.forceCenter(width / 2, height / 2))
-  .force("y", d3.forceY(0.001))
-  .force("x", d3.forceX(0.001));
+  // .force("y", d3.forceY(0.001))
+  // .force("x", d3.forceX(0.001));
 
 // load the data, some people call json param graph instead
 // best to load data as func in case any errors
@@ -32,6 +34,7 @@ d3.json("data.json", function (error, json) {
     .nodes(json.nodes)
     .force("link")
     .links(json.links);
+
 
 // add directional markers
 // taken from Mike Bostock example
@@ -136,7 +139,29 @@ d3.json("data.json", function (error, json) {
     node.attr("transform", function (d) {
       return "translate(" + d.x + "," + d.y + ")";
     });
-  });
+  })
+  // force.restart();
+
+  // console.log(force)
+
+
+//******************* RESIZING: 
+  // d3.select(window)
+  //   .on("resize", function () {
+  //     console.log("something's happening");
+  //     var targetWidth = svg.node().getBoundingClientRect().width;
+  //     svg.attr("width", targetWidth);
+  //     svg.attr("height", targetWidth / aspect);
+  //   });
+  // resize();
+  // d3.select(window).on("resize", resize);
+
+  // function resize() {
+  //   width = window.innerWidth, height = window.innerHeight;
+  //   svg.attr("width", width).attr("height", height);
+  //   force.size([width, height]).resume();
+  // }
+
 
 // drag and drop funcs
 // *** RENAME THESE
