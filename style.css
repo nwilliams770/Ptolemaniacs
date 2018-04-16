@@ -26,6 +26,10 @@
   transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);
 }
 
+.node:hover {
+  cursor: pointer;
+}
+
 .node:hover text {
   cursor: default;
 }
