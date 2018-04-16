@@ -217,14 +217,16 @@ d3.json("data.json", function (error, json) {
       });
 
       link.style("opacity", function (o) {
-        return d.index == o.source.index | d.index == o.target.index ? 1 : 0.1;
-      });
+        ((d.index == o.source.index | d.index == o.target.index) && (o.type !== "corule" && o.type !== "rule")) ? "1" : "0.1" 
+      })
       //Reduce the op
       toggleConnections = 0;
     } else {
       //Put them back to opacity=1
       node.style("opacity", 1);
-      link.style("opacity", 1);
+      link.style("opacity", function (d) {
+        return (d.type === "corule" || d.type === "rule") ? "0" : "1"
+      });           
       label.style("display", "none");
       toggleConnections = 1;
     }
@@ -313,21 +315,17 @@ d3.json("data.json", function (error, json) {
   function filterLineOfRule(i) {
     d3.selectAll(".link").transition().duration(10)
       .style("opacity", "0");
-
     var links = d3.selectAll(".link.rule");
     links.transition().duration(1000).style("opacity", "1");
-    
     var circles = d3.selectAll(".node circle").filter(function (d) {
       return d.rule === i;
     })
-
     var text = d3.selectAll(".node text").filter(function (d) {
       return d.rule === i;
     })
 
-    circles.transition().duration(1000).delay(1000 * i)
+    circles.transition().duration(700).delay(1000 * i)
       .style("fill", "pink");
-
     text.transition().duration(1000).delay(1000 * i).style("display", "inline");
   }
 
@@ -364,6 +362,17 @@ d3.json("data.json", function (error, json) {
       }
       toggleRule = 0;   
     } else {
+      console.log("made it!")
+      var circles = d3.selectAll(".node circle").filter(function (d) {
+        return d.rule === i;
+      })
+      var text = d3.selectAll(".node text").filter(function (d) {
+        return d.rule === i;
+      })
+      circles.interrupt()
+        .transition();
+      text.interrupt()
+        .transition();
       d3.selectAll(".link").style("opacity", function (d) {
         if (d.type === "child" || d.type === "marriage") {
           return "1";
