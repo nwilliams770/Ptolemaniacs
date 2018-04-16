@@ -15,16 +15,15 @@ var svg = d3.select("#chart")
 var force = d3.forceSimulation()
 // preshipped force, simulates charged molecules where each repels or attracts until stable state
   // .force("charge", d3.forceManyBody().strength(-10000).distanceMin(-200).distanceMax(800))
-  .force("charge", d3.forceManyBody().strength(-100))
+  .force("charge", d3.forceManyBody().strength(-125))
+  .force("center", d3.forceCenter(width / 2, height / 2))
+  
   .force('collision', d3.forceCollide().radius(function (d) {
     return d.r;
   }))
-  
-
-  .force("link", d3.forceLink().id(function (d) { return d.index }))
-  .force("center", d3.forceCenter(width / 2, height / 2))
-  // .force("y", d3.forceY(0.001))
-  // .force("x", d3.forceX(0.001));
+  .force("link", d3.forceLink().distance(75).id(function (d) { return d.index }))
+  // .force("y", d3.forceY(0.0001))
+  // .force("x", d3.forceX(0.0001));
 
 // load the data, some people call json param graph instead
 // best to load data as func in case any errors
@@ -266,11 +265,11 @@ d3.json("data.json", function (error, json) {
       toggleMurders = 0;
     } else {
       d3.selectAll(".link").style("opacity", function (d) {
-        return d.type === "corule" ? "0" : "1"
+        return (d.type === "corule" || d.type === "rule" ) ? "0" : "1"
       });           
       notSelected.style('opacity', '1');
-      selected.selectAll('circle').style('fill', 'white');
       selected.selectAll('text').style('display', 'none');
+      colorizeNodes(selected.selectAll('circle'));
       toggleMurders = 1;
     }
   }
@@ -332,16 +331,28 @@ d3.json("data.json", function (error, json) {
     text.transition().duration(1000).delay(1000 * i).style("display", "inline");
   }
 
-  function colorizeNodes() {
-    d3.selectAll(".node").style("opacity", function (d) { 
-      if (d.generation < 4) {
-        return "#abcb42";
-      } else if (d.generation > 4 && d.generation < 7) {
-        return "#feaf17";
-      } else {
-        return "#f35001";
-      }
-    });
+  function colorizeNodes(nodes) {
+    if (nodes) {
+      nodes.style("fill", function (d) {
+        if (d.generation < 4) {
+          return "#abcb42";
+        } else if (d.generation > 4 && d.generation < 7) {
+          return "#feaf17";
+        } else {
+          return "#f35001";
+        }
+      })
+    } else {
+      d3.selectAll(".node circle").style("fill", function (d) {
+        if (d.generation < 4) {
+          return "#abcb42";
+        } else if (d.generation > 4 && d.generation < 7) {
+          return "#feaf17";
+        } else {
+          return "#f35001";
+        }
+      });
+    }
   }
 
 
