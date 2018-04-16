@@ -250,8 +250,15 @@ d3.json("data.json", function (error, json) {
   var animDuration = 500;
   
   // let labelsShown = false;
+
+  function toggleButton(el) {
+    let label = el.innerHTML;
+    label.includes("Show") ? label = label.replace("Show", "Hide") : label = label.replace("Hide", "Show")
+    el.innerHTML = label;
+  }
   function filterMurders() {
     if (toggleCorules === 0) return;
+    toggleButton(this);    
     var nodes = svg.selectAll(".node");
     var selected = nodes.filter(function (d) {
       return d.murdered;
@@ -277,7 +284,8 @@ d3.json("data.json", function (error, json) {
   }
 
   function filterCorules() {
-    if (toggleMurders === 0 || (toggleCorules === 0 && toggleRule === 0)) return;    
+    if (toggleMurders === 0 || (toggleCorules === 0 && toggleRule === 0)) return;
+    toggleButton(this);        
     if (toggleCorules === 1) {
       d3.selectAll(".link").style("opacity", function (d) {
         return d.type === "corule" ? "1" : "0"
@@ -301,6 +309,7 @@ d3.json("data.json", function (error, json) {
 
   function showLabels() {
     if (toggleMurders === 0 || toggleCorules === 0) return;
+    toggleButton(this);    
     if (toggleLabels === 1) {
       d3.selectAll(".node text").style("display", "inline");
       toggleLabels = 0;
@@ -356,6 +365,8 @@ d3.json("data.json", function (error, json) {
 
   function visitNodes () {
     if (toggleMurders === 0 || toggleConnections === 0) return;
+    toggleButton(this);    
+    
     if (toggleRule === 1) {
       for (let i = 1; i < 16; i++) {
         filterLineOfRule(i);
