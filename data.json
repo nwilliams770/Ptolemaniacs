@@ -491,7 +491,7 @@
     {"source": 30, "target": 31, "type": "rule"}, 
     {"source": 30, "target": 39, "type": "rule"},
 
-    {"source": 31, "target": 3, "type": "rule"},
+    {"source": 31, "target": 38, "type": "rule"},
     {"source": 39, "target": 38, "type": "rule"},
 
     {"source": 38, "target": 36, "type": "rule"}, 
