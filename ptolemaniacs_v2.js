@@ -243,6 +243,8 @@ d3.json("data.json", function (error, json) {
     });    
   }
 
+
+
   function showCorules() {
     //TO-DO: refactor toggleRule to toggleRuling and only show corules once anim complete
     if (murdersToggled || (corulesToggled && toggleRule === 0)) return;
@@ -250,20 +252,31 @@ d3.json("data.json", function (error, json) {
     if (!corulesToggled) {
       link.style("opacity", function (d) {
         return d.type === "corule" ? "1" : "0"
-      });   
-      node.selectAll("circle").style("opacity", function (d) {
-        return d.familial_ruler ? "1" : "0"
+      });
+      
+      const nonCorulers = node.selectAll("circle").filter(function (d) {
+        return !d.familial_ruler;
       })
+      toggleNodeOpacity(nonCorulers);
+      
+      // node.selectAll("circle").style("opacity", function (d) {
+      //   return d.familial_ruler ? "1" : "0"
+      // })
       node.selectAll("text").style("display", function (d) {
         return d.familial_ruler ? "inline" : "none"
       })
       corulesToggled = true;
     } else {
       restoreLinks();      
-      node.selectAll("circle").style("opacity", "1");
+      toggleNodeOpacity();
       node.selectAll("text").style("display", "none");
       corulesToggled = false;
     }
+  }
+
+  function toggleNodeOpacity(nodeCircles) {
+    nodeCircles = nodeCircles || d3.selectAll(".node circle");
+    nodeCircles.classed("hidden", !(nodeCircles.classed("hidden")));
   }
 
 
@@ -274,12 +287,14 @@ d3.json("data.json", function (error, json) {
     if (murdersToggled || corulesToggled) return;
     updateButton(this);    
     if (!labelsToggled) {
-      const visibleNodes = node.filter(function (d) {
-        let currentNode = node.select(d);
-        console.log(currentNode);
+      // select node text based on opacity of circles
+      d3.selectAll(".node").each(function (d, i) {
+        let currentNode = d3.select(this);
+        let hidden = currentNode.select("circle").classed("hidden");
+        if (!hidden) {
+          currentNode.select("text").style("display", "inline");
+        }
       })
-      console.log(visibleNodes);
-      visibleNodes._parents.selectAll("text").style("display", "inline");
       labelsToggled = true;
     } else {
       d3.selectAll(".node text").style("display", "none");
