@@ -53,3 +53,15 @@
   display: flex;
 }
 
+h1:empty::before {
+  content: "";
+}
+
+#label {
+  transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);   
+}
+
+.hidden {
+  opacity: 0;
+}
+
