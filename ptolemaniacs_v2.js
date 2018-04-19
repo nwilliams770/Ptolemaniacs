@@ -1,3 +1,16 @@
+// To-Do:
+// - minor bug when dragging, node ends up stuck with hover color; perhaps colorize nodes immediately after dragends
+// - ddbl click functionality for when murders and corules toggled
+// -if we are in dbbl click, header should probably ONLY be the clicked on node
+// - fill header HTML with parents and children; predessor, successor, coruler
+// - line of rule functionality
+// - GROW out nodes, text and push text over on Murders, Corules, Rule, dbbl click
+// - Create legend using built in d3
+// - STYLING
+
+
+
+
 // Philadelphoi
 let width =1920,
   height = 1000;
@@ -56,7 +69,7 @@ d3.json("data.json", function (error, json) {
                 .append("line")
                 .attr("id", function (d) { return "link-" + d.index})
                 .attr("class", function (d) { 
-                  return (d.type === "rule" || d.type === "corule") ? `link-${d.type} hidden` : `link-${d.type}` })              
+                  return (d.type === "rule" || d.type === "corule") ? `link link-${d.type} hidden` : `link link-${d.type}` })              
                 .attr("marker-end", function (d) {
                   if (d.type === 'child') {
                     return "url(#child)";
@@ -84,13 +97,7 @@ d3.json("data.json", function (error, json) {
       .on("start", dragBegin)
       .on("drag", dragging)
       .on("end", dragEnded))
-    .on("mouseover", function(d) {
-      //TO-DO: Wrap header in div, toggle that opacity on mouseover and leave to have transition
-      header.innerHTML = d.name;
-      const nodeCircle = d3.select(this).select("circle");
-      nodeCircle.attr('data-color', `${nodeCircle.style("fill")}`)
-      nodeCircle.style('fill', 'yellowgreen');
-      })
+      .on("mouseover", mouseOver)
     .on("mouseleave", function (d) {
       //TO-DO: Wrap header in div, toggle that opacity on mouseover and leave to have transition
       const nodeCircle = d3.select(this).select("circle");      
@@ -135,6 +142,52 @@ d3.json("data.json", function (error, json) {
     });
   })
 
+  function mouseOver(d) {
+    let children = [],
+        parents = [],
+        corulers = [],
+        spouses = [], 
+        successor = [], 
+        predessor = [];
+    let currentNode = d;
+    header.innerHTML = `${d.name} (${d.lifespan})`;
+    const nodeCircle = d3.select(this).select("circle");
+    nodeCircle.attr('data-color', `${nodeCircle.style("fill")}`)
+    nodeCircle.style('fill', 'yellowgreen');
+    d3.selectAll(".link").each(function (d) {
+      if (d.source.index === currentNode.index || d.target.index === currentNode.index) {
+        switch(d.type) {
+          case "child":
+            if (d.source.index === currentNode.index) {
+              children.push(d.target.name);
+            } else {
+              parents.push(d.source.name);
+
+            }
+            break;
+          case "marriage":
+            d.source.index === currentNode.index ? spouses.push(d.target.name) : spouses.push(d.source.name)
+            break;
+          case "corule":
+            d.source.index === currentNode.index ? corulers.push(d.target.name) : corulers.push(d.source.name)
+            break;
+          case "rule":
+            if (d.source.index === currentNode.index) {
+              successor.push(d.target.name);
+            } else {
+              predessor.push(d.source.name);
+            } 
+            break;            
+        }
+        console.log(children);
+        console.log(parents);
+        console.log(spouses);
+        console.log(corulers);
+        console.log(predessor);
+        console.log(successor);
+      }
+    })
+  }
 
 // drag and drop funcs
 // *** RENAME THESE
@@ -235,6 +288,10 @@ d3.json("data.json", function (error, json) {
         updateButton(this);
         return;
       }
+
+      // selected.selectAll("circle").attr("r", "15");
+      // selected.selectAll("text").attr("dx", "1.5em")
+      //                           .style("font", "20px helvetica");
       link.classed("hidden", true);      
       notSelected.classed("hidden", true);
       selected.selectAll('circle').style('fill', 'red');
