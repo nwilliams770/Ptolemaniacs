@@ -208,6 +208,10 @@ d3.json("data.json", function (error, json) {
   }
 
   function updateButton(button) {
+    if (!d3.select(button).classed("bttn-labels")) {
+      let buttonLabel = labelsToggled ? "Hide Labels" : "Show Labels"
+      labelButton.innerHTML = buttonLabel;
+    }
     let newLabel = button.innerHTML;
     newLabel = newLabel.includes("Show") ? newLabel.replace("Show", "Hide") : newLabel.replace("Hide", "Show")
     button.innerHTML = newLabel;
@@ -215,7 +219,6 @@ d3.json("data.json", function (error, json) {
   
   function showMurders() {
     if (corulesToggled) return;
-    updateButton(this);    
     let selected = node.filter(function (d) {
       return d.murdered;
     })
@@ -224,17 +227,22 @@ d3.json("data.json", function (error, json) {
     })
     if (!murdersToggled) {
       link.style("opacity", "0");      
-      notSelected.style('opacity', '0');
+      notSelected.classed("hidden", true);
       selected.selectAll('circle').style('fill', 'red');
       selected.selectAll('text').style('display', 'inline');
       murdersToggled = true;
+      labelsToggled = true;
+      // showLabels()
+
     } else {
       restoreLinks();
       colorizeNodes();      
-      notSelected.style('opacity', '1');
+      notSelected.classed("hidden", false);
       selected.selectAll('text').style('display', 'none');
+      labelsToggled = false;
       murdersToggled = false;
     }
+    updateButton(this);    
   }
 
   function restoreLinks() {
@@ -282,9 +290,7 @@ d3.json("data.json", function (error, json) {
 
 
   function showLabels() {
-    // TO_DO: Check if node circles have 0 opacity before showing their labels
-    // probably break it into a function itself
-    if (murdersToggled || corulesToggled) return;
+    if (corulesToggled) return;
     updateButton(this);    
     if (!labelsToggled) {
       // select node text based on opacity of circles
@@ -293,7 +299,7 @@ d3.json("data.json", function (error, json) {
         let hidden = currentNode.select("circle").classed("hidden");
         if (!hidden) {
           currentNode.select("text").style("display", "inline");
-        }
+        } 
       })
       labelsToggled = true;
     } else {
