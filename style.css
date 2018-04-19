@@ -1,4 +1,4 @@
-.link {
+line {
   stroke-opacity: 0.3;
   stroke-width: 1.5px;
   /* stroke: pink; */
@@ -7,7 +7,7 @@
 
 
 
-.link.marriage {
+.link-marriage {
    stroke-dasharray: 0,2 1;
 }
 
@@ -15,9 +15,9 @@
   opacity: 0;
 } */
 
-.link.corule, .link.rule {
+/* .link-corule, .link-rule {
   opacity: 0;
-}
+} */
 
 .node circle {
   stroke: black;

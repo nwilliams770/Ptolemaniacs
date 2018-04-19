@@ -29,7 +29,7 @@ d3.json("data.json", function (error, json) {
   };
 
   json.links.forEach(function (d) {
-    if (d.type === "child" || d.type === "marriage") {
+    if (d.type === "child" || d.type === "marriage" || d.type === "corule") {
       linkedByIndex[d.source.index + "," + d.target.index] = 1;
     }
   });
@@ -54,7 +54,9 @@ d3.json("data.json", function (error, json) {
                 .data(json.links)
                 .enter()
                 .append("line")
-                .attr("class", function (d) { return "link " + d.type; })
+                .attr("id", function (d) { return "link-" + d.index})
+                .attr("class", function (d) { 
+                  return (d.type === "rule" || d.type === "corule") ? `link-${d.type} hidden` : `link-${d.type}` })              
                 .attr("marker-end", function (d) {
                   if (d.type === 'child') {
                     return "url(#child)";
@@ -218,15 +220,22 @@ d3.json("data.json", function (error, json) {
   }
   
   function showMurders() {
-    if (corulesToggled) return;
-    let selected = node.filter(function (d) {
+    let selected = d3.selectAll(".node").filter(function (d) {
       return d.murdered;
     })
-    let notSelected = node.filter(function (d) {
+    let notSelected = d3.selectAll(".node").filter(function (d) {
       return !(d.murdered);
     })
     if (!murdersToggled) {
-      link.style("opacity", "0");      
+      if (corulesToggled) {
+        selected.selectAll('circle').style('fill', 'red');        
+        selected.classed("hidden", false)
+        selected.selectAll('text').style('display', 'inline');
+        murdersToggled = true;
+        updateButton(this);
+        return;
+      }
+      link.classed("hidden", true);      
       notSelected.classed("hidden", true);
       selected.selectAll('circle').style('fill', 'red');
       selected.selectAll('text').style('display', 'inline');
@@ -235,6 +244,18 @@ d3.json("data.json", function (error, json) {
       // showLabels()
 
     } else {
+      if (corulesToggled) {
+        node.filter(function (d) {
+          return (!d.familial_ruler) && d.murdered;
+        }).classed("hidden", true);       
+        selected.filter(function (d) {
+          return (!d.familial_ruler) && d.murdered;
+        }).selectAll("text").style("display", "none"); 
+        colorizeNodes();      
+        murdersToggled = false;
+        updateButton(this);
+        return;
+      }
       restoreLinks();
       colorizeNodes();      
       notSelected.classed("hidden", false);
@@ -246,8 +267,8 @@ d3.json("data.json", function (error, json) {
   }
 
   function restoreLinks() {
-    link.style("opacity", function (d) {
-      return (d.type === "corule" || d.type === "rule") ? "0" : "1"
+    link.classed("hidden", function (d) {
+      return (d.type === "corule" || d.type === "rule") ? true : false
     });    
   }
 
@@ -255,42 +276,74 @@ d3.json("data.json", function (error, json) {
 
   function showCorules() {
     //TO-DO: refactor toggleRule to toggleRuling and only show corules once anim complete
-    if (murdersToggled || (corulesToggled && toggleRule === 0)) return;
-    updateButton(this);        
+    if ((corulesToggled && toggleRule === 0)) return;
     if (!corulesToggled) {
-      link.style("opacity", function (d) {
-        return d.type === "corule" ? "1" : "0"
-      });
       
-      const nonCorulers = node.selectAll("circle").filter(function (d) {
+      if (murdersToggled) {
+        const murdereCoruleLinks = d3.selectAll(".link-corule");
+        const murdered = d3.selectAll(".node").filter(function (d) { return d.murdered });
+        const corulers = d3.selectAll(".node").filter(function (d) { return d.familial_ruler && (!d.murdered)})
+        murdered.each(function (murderedNode) {
+          murdereCoruleLinks.each(function (coruleLink) {
+            corulers.each(function (node) {
+              //check if current link is connect to the murderedNode
+              if (murderedNode.index === coruleLink.source.index || murderedNode.index === coruleLink.target.index) {
+                // now check if the node neighbors the murderedNode by means of ANY link type
+                if (neighboring(murderedNode, node) || neighboring(node, murderedNode)) {
+                  if (node.index === coruleLink.source.index || node.index === coruleLink.target.index) {
+                    d3.select(this).classed("hidden", false);
+                    d3.select(this).select("text").style("display", "inline");                
+                    d3.select(`#link-${coruleLink.index}`).classed("hidden", false);
+                 }
+                }
+              }
+            })
+          })
+        }) 
+        updateButton(this);  
+        corulesToggled = true;
+        return;        
+      }
+      link.classed("hidden", function (d) {
+        return d.type !== "corule"
+      });
+      const nonCorulers = node.filter(function (d) {
         return !d.familial_ruler;
       })
       toggleNodeOpacity(nonCorulers);
-      
-      // node.selectAll("circle").style("opacity", function (d) {
-      //   return d.familial_ruler ? "1" : "0"
-      // })
       node.selectAll("text").style("display", function (d) {
         return d.familial_ruler ? "inline" : "none"
       })
       corulesToggled = true;
+      labelsToggled = true;
     } else {
+      if (murdersToggled) {
+        node.selectAll("text").style("display", function (d) {
+          return !d.murdered ? "none" : "inline"
+        })
+        node.classed("hidden", function (d) { return !d.murdered});
+        link.classed("hidden", true);
+        updateButton(this);
+        corulesToggled = false;
+        return;
+      }
       restoreLinks();      
       toggleNodeOpacity();
       node.selectAll("text").style("display", "none");
       corulesToggled = false;
+      labelsToggled = false;
     }
+    updateButton(this);            
   }
 
   function toggleNodeOpacity(nodeCircles) {
-    nodeCircles = nodeCircles || d3.selectAll(".node circle");
+    nodeCircles = nodeCircles || d3.selectAll(".node");
     nodeCircles.classed("hidden", !(nodeCircles.classed("hidden")));
   }
 
 
 
   function showLabels() {
-    if (corulesToggled) return;
     updateButton(this);    
     if (!labelsToggled) {
       // select node text based on opacity of circles
