@@ -1,5 +1,5 @@
 line {
-  stroke-opacity: 0.3;
+  /* stroke-opacity: 0.3; */
   stroke-width: 1.5px;
   /* stroke: pink; */
   transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);  
@@ -63,5 +63,9 @@ h1:empty::before {
 
 .hidden {
   opacity: 0;
+}
+
+.dimmed {
+  opacity: 0.1;
 }
 
