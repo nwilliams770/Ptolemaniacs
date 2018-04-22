@@ -1,8 +1,5 @@
 // To-Do:
-// - minor bug when dragging, node ends up stuck with hover color; perhaps colorize nodes immediately after dragends
 // - ddbl click functionality for when murders and corules toggled
-// -if we are in dbbl click, header should probably ONLY be the clicked on node
-// - fill header HTML with parents and children; predessor, successor, coruler
 // - line of rule functionality
 // - GROW out nodes, text and push text over on Murders, Corules, Rule, dbbl click
 // - Create legend using built in d3
@@ -143,6 +140,7 @@ d3.json("data.json", function (error, json) {
   })
 
   function mouseOver(d) {
+    if (neighborNodesToggled) return;
     const currentNodeDetails = { children: [],
                                parents: [],
                                corulers: [],
@@ -183,7 +181,6 @@ d3.json("data.json", function (error, json) {
       }
     })
     for (let key in currentNodeDetails) {
-      console.log(currentNodeDetails[key]);
       if (currentNodeDetails[key].length <= 0) continue;     
       let nodeDetail = document.createElement('li');
       let entry;
@@ -215,6 +212,11 @@ d3.json("data.json", function (error, json) {
   function dragEnded(d) {
     if (!d3.event.active) force.alphaTarget(0);
     d.fx = null, d.fy = null;
+    if (murdersToggled) {
+      node.style("fill", "red");
+    } else {
+      colorizeNodes();
+    }
   }
 
   var toggleConnections = 1;
@@ -237,28 +239,38 @@ d3.json("data.json", function (error, json) {
   }
 
   function showNeighborNodes() {
-    if (toggleMurders === 0 || toggleCorules === 0) return;
+    if (murdersToggled || corulesToggled) return;
     if (!neighborNodesToggled) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(this).node().__data__;
-      node.style("opacity", function (o) {
-        return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+      node.classed("dimmed", function (o) {
+        return !(neighboring(d, o) || neighboring(o, d));
       });
       label.style("display", function (o) {
         return neighboring(d, o) | neighboring(o, d) ? "inline" : "";
       });
 
-      link.style("opacity", function (o) {
-        ((d.index == o.source.index | d.index == o.target.index) && (o.type !== "corule" && o.type !== "rule")) ? "1" : "0.1" 
+      link.classed("dimmed", function (o) {
+        if (o.type !== "rule" || o.type !== "corule" ) {
+          if (!(d.index == o.source.index || d.index == o.target.index)) {
+            console.log(o);
+            return true; 
+          }
+        }
       })
       //Reduce the op
       neighborNodesToggled = true;
     } else {
       //Put them back to opacity=1
-      node.style("opacity", 1);
-      link.style("opacity", function (d) {
-        return (d.type === "corule" || d.type === "rule") ? "0" : "1"
-      });           
+      node.classed("dimmed", false);
+      if (corulesToggled && murdersToggled) {
+        node.classed("hidden", function (d) { return (d.familial_ruler && d.murdered) });
+      } else if (corulesToggled) {
+        node.classed("hidden", function (d) { return d.familial_ruler })
+      } else if (murdersToggled) {
+        node.classed("hidden", function (d) { return d.murdered })
+      }
+      link.classed("dimmed", false);
       label.style("display", "none");
       neighborNodesToggled = false;
     }
@@ -325,7 +337,6 @@ d3.json("data.json", function (error, json) {
         updateButton(this);
         return;
       }
-      restoreLinks();
       colorizeNodes();      
       notSelected.classed("hidden", false);
       selected.selectAll('text').style('display', 'none');
@@ -338,7 +349,9 @@ d3.json("data.json", function (error, json) {
   function restoreLinks() {
     link.classed("hidden", function (d) {
       return (d.type === "corule" || d.type === "rule") ? true : false
-    });    
+    }); 
+
+
   }
 
 
