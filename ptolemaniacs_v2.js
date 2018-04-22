@@ -143,12 +143,14 @@ d3.json("data.json", function (error, json) {
   })
 
   function mouseOver(d) {
-    let children = [],
-        parents = [],
-        corulers = [],
-        spouses = [], 
-        successor = [], 
-        predessor = [];
+    const currentNodeDetails = { children: [],
+                               parents: [],
+                               corulers: [],
+                               spouses: [], 
+                               rule: { successor: [], 
+                                       predessor: [] }};
+    let detailsListContainer = document.getElementById("label--details");
+    let detailsList = document.createElement("ul");
     let currentNode = d;
     header.innerHTML = `${d.name} (${d.lifespan})`;
     const nodeCircle = d3.select(this).select("circle");
@@ -159,35 +161,45 @@ d3.json("data.json", function (error, json) {
         switch(d.type) {
           case "child":
             if (d.source.index === currentNode.index) {
-              children.push(d.target.name);
+              currentNodeDetails["children"].push(d.target.name);
             } else {
-              parents.push(d.source.name);
-
+              currentNodeDetails["parents"].push(d.source.name);
             }
             break;
           case "marriage":
-            d.source.index === currentNode.index ? spouses.push(d.target.name) : spouses.push(d.source.name)
+            d.source.index === currentNode.index ? currentNodeDetails["spouses"].push(d.target.name) : currentNodeDetails["spouses"].push(d.source.name)
             break;
           case "corule":
-            d.source.index === currentNode.index ? corulers.push(d.target.name) : corulers.push(d.source.name)
+            d.source.index === currentNode.index ? currentNodeDetails["corulers"].push(d.target.name) : currentNodeDetails["corulers"].push(d.source.name)
             break;
           case "rule":
             if (d.source.index === currentNode.index) {
-              successor.push(d.target.name);
+              currentNodeDetails["rule"]["successor"].push(d.target.name);
             } else {
-              predessor.push(d.source.name);
+              currentNodeDetails["rule"]["predessor"].push(d.source.name);
             } 
             break;            
         }
-        console.log(children);
-        console.log(parents);
-        console.log(spouses);
-        console.log(corulers);
-        console.log(predessor);
-        console.log(successor);
       }
     })
+    for (let key in currentNodeDetails) {
+      console.log(currentNodeDetails[key]);
+      if (currentNodeDetails[key].length <= 0) continue;     
+      let nodeDetail = document.createElement('li');
+      let entry;
+      if (key !== "rule") {
+        entry = `${key}: ${currentNodeDetails[key].join(", ")}`;
+      } else {
+        entry = `Predecessor: ${currentNodeDetails[key]["predessor"]} Successor: ${currentNodeDetails[key]["successor"]}`;
+      }
+      nodeDetail.appendChild(document.createTextNode(entry));
+      detailsList.appendChild(nodeDetail);
+      
+    }
+
+    detailsListContainer.childNodes[0] ? detailsListContainer.replaceChild(detailsList, detailsListContainer.childNodes[0]) : detailsListContainer.appendChild(detailsList)
   }
+
 
 // drag and drop funcs
 // *** RENAME THESE
