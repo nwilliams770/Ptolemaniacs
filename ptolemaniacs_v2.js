@@ -236,13 +236,32 @@ d3.json("data.json", function (error, json) {
   //This function looks up whether a pair are neighbours
   function neighboring(a, b) {
     return linkedByIndex[a.index + "," + b.index];
-  }
+    }
 
   function showNeighborNodes() {
-    if (murdersToggled || corulesToggled) return;
+
     if (!neighborNodesToggled) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(this).node().__data__;
+      if (murdersToggled || corulesToggled) {
+        console.log("MADE IT!")
+        node.classed("hidden", function (o) {
+          if (neighboring(d, o) || neighboring(o, d)) return false;
+          if (murdersToggled && o.murdered) return false;
+          if (corulesToggled && o.familial_ruler) return false;
+          return true;
+        })
+        label.style("display", function (o) {
+          if (neighboring(d, o) || neighboring(o, d)) return "inline";
+        });
+        link.classed("hidden", function (o) {
+          if (murdersToggled && (d.index == o.source.index || d.index == o.target.index)) return false;
+          if (corulesToggled && o.type === "corule") return false;
+          if (corulesToggled && (d.index == o.source.index || d.index == o.target.index)) return false; 
+          return true;
+        })
+        return;
+      }
       node.classed("dimmed", function (o) {
         return !(neighboring(d, o) || neighboring(o, d));
       });
@@ -253,7 +272,6 @@ d3.json("data.json", function (error, json) {
       link.classed("dimmed", function (o) {
         if (o.type !== "rule" || o.type !== "corule" ) {
           if (!(d.index == o.source.index || d.index == o.target.index)) {
-            console.log(o);
             return true; 
           }
         }
@@ -277,15 +295,6 @@ d3.json("data.json", function (error, json) {
   }
 
   // ETC FUNCTIONALITY *****
-
-  function showHeader(node) {
-    var parents = d3.selectAll('.node').filter(function (d) {
-      console.log(node);
-      return neighboring(d, node) || neighboring(node, d);
-    })
-    console.log(parents);
-  }
-
   function updateButton(button) {
     if (!d3.select(button).classed("bttn-labels")) {
       let buttonLabel = labelsToggled ? "Hide Labels" : "Show Labels"
@@ -337,6 +346,7 @@ d3.json("data.json", function (error, json) {
         updateButton(this);
         return;
       }
+      restoreLinks();
       colorizeNodes();      
       notSelected.classed("hidden", false);
       selected.selectAll('text').style('display', 'none');
