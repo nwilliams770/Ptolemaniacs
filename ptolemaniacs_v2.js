@@ -1,11 +1,9 @@
 // To-Do:
 // - ddbl click functionality for when murders and corules toggled
 // - line of rule functionality
-// - GROW out nodes, text and push text over on Murders, Corules, Rule, dbbl click
+// - GROW out nodes, text and push text over on Rule, dbbl click
 // - Create legend using built in d3
 // - STYLING
-
-
 
 
 // Philadelphoi
@@ -244,7 +242,6 @@ d3.json("data.json", function (error, json) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(this).node().__data__;
       if (murdersToggled || corulesToggled) {
-        console.log("MADE IT!")
         node.classed("hidden", function (o) {
           if (neighboring(d, o) || neighboring(o, d)) return false;
           if (murdersToggled && o.murdered) return false;
@@ -255,11 +252,13 @@ d3.json("data.json", function (error, json) {
           if (neighboring(d, o) || neighboring(o, d)) return "inline";
         });
         link.classed("hidden", function (o) {
+          if (o.type === "rule") return true;
           if (murdersToggled && (d.index == o.source.index || d.index == o.target.index)) return false;
           if (corulesToggled && o.type === "corule") return false;
           if (corulesToggled && (d.index == o.source.index || d.index == o.target.index)) return false; 
           return true;
         })
+        neighborNodesToggled = true;
         return;
       }
       node.classed("dimmed", function (o) {
@@ -283,10 +282,19 @@ d3.json("data.json", function (error, json) {
       node.classed("dimmed", false);
       if (corulesToggled && murdersToggled) {
         node.classed("hidden", function (d) { return (d.familial_ruler && d.murdered) });
+        link.classed("hidden", function (d) { return !(d.type === "corule") })
+        label.style("display", function (d) { return (d.familial_ruler || d.murdered) ? "inline" : "none" })
+        return;     
       } else if (corulesToggled) {
-        node.classed("hidden", function (d) { return d.familial_ruler })
+        node.classed("hidden", function (d) { return !d.familial_ruler })
+        link.classed("hidden", function (d) { return !(d.type === "corule") })
+        label.style("display", function (d) { return d.familial_ruler ? "inline" : "none"}) 
+        return;
       } else if (murdersToggled) {
-        node.classed("hidden", function (d) { return d.murdered })
+        node.classed("hidden", function (d) { return !d.murdered })
+        link.classed("hidden", true);
+        label.style("display", function (d) { return d.murdered ? "inline" : "none" })
+        return;
       }
       link.classed("dimmed", false);
       label.style("display", "none");
