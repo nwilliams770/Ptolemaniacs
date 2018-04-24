@@ -1,5 +1,4 @@
 // To-Do:
-// - ddbl click functionality for when murders and corules toggled
 // - line of rule functionality
 // - GROW out nodes, text and push text over on Rule, dbbl click
 // - Create legend using built in d3
@@ -475,12 +474,9 @@ d3.json("data.json", function (error, json) {
 
 
   function visitNodes(i) {
-    d3.selectAll(".link").transition()
-      .duration(10)
-      .style("opacity", "0");
+    link.classed("hidden", true);
 
-    var links = d3.selectAll(".link.rule");
-    links.transition().duration(10).style("opacity", "1");
+    var links = d3.selectAll(".link-rule");
     var circles = d3.selectAll(".node circle").filter(function (d) {
       return d.rule === i;
     })
@@ -489,17 +485,17 @@ d3.json("data.json", function (error, json) {
     })
     
     circles.transition()
-      .duration(10 * i)
-      .delay(100 * (i + 1))
+      .duration(60)
+      .delay(100 * i)
       .style("fill", "pink");
     text.transition()
-      .duration(10 * i)
-      .delay(100 * (i + 1))
-      .style("display", "inline");
+      .duration(60)
+      .delay(100 * i)
+      .style("display", "inline");   
   }
 
   function showLineOfRule() {
-    if (toggleMurders === 0 || neighborNodesToggled) return;
+    if (murdersToggled || neighborNodesToggled || corulesToggled) return;
     updateButton(this);        
     if (toggleRule === 1) {
       toggleRule = 0;         
