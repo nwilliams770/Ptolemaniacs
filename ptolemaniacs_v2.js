@@ -1,5 +1,7 @@
 // To-Do:
 // - line of rule functionality
+    // - need to refactor text to change from display to add hidden class
+    // - for line of rule, strip class, manually add and remove opacity for labels, cannot do transition for adding class
 // - GROW out nodes, text and push text over on Rule, dbbl click
 // - Create legend using built in d3
 // - STYLING
@@ -229,16 +231,18 @@ d3.json("data.json", function (error, json) {
   var toggleLabels = 1;
   var toggleRule = 1;
 
+  const linkedByIndex = {};
+  for (i = 0; i < json.nodes.length; i++) {
+    linkedByIndex[i + "," + i] = 1;
+  };
 
-  //This function looks up whether a pair are neighbours
+  //Gather the neighbors
   function neighboring(a, b) {
     return linkedByIndex[a.index + "," + b.index];
-    }
+  }
 
   function showNeighborNodes() {
-
     if (!neighborNodesToggled) {
-      //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(this).node().__data__;
       if (murdersToggled || corulesToggled) {
         node.classed("hidden", function (o) {
@@ -266,13 +270,14 @@ d3.json("data.json", function (error, json) {
       label.style("display", function (o) {
         return neighboring(d, o) | neighboring(o, d) ? "inline" : "";
       });
-
-      link.classed("dimmed", function (o) {
-        if (o.type !== "rule" || o.type !== "corule" ) {
-          if (!(d.index == o.source.index || d.index == o.target.index)) {
-            return true; 
+      link.filter(function (d) {
+            return !(d.type === "rule" || d.type === "corule")})
+          .classed("dimmed", function (o) {
+            if (o.type !== "rule" || o.type !== "corule" ) {
+              if (!(d.index == o.source.index || d.index == o.target.index)) {
+              return true; 
+            }
           }
-        }
       })
       //Reduce the op
       neighborNodesToggled = true;
@@ -375,7 +380,6 @@ d3.json("data.json", function (error, json) {
 
   function showCorules() {
     //TO-DO: refactor toggleRule to toggleRuling and only show corules once anim complete
-    if ((corulesToggled && toggleRule === 0)) return;
     if (!corulesToggled) {
       
       if (murdersToggled) {
