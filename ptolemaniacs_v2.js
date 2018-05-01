@@ -226,9 +226,6 @@ d3.json("data.json", function (error, json) {
       corulesToggled = false,
       labelsToggled = false;
 
-  var toggleMurders = 1;
-  var toggleCorules = 1;
-  var toggleLabels = 1;
   var toggleRule = 1;
 
   const linkedByIndex = {};
@@ -242,8 +239,11 @@ d3.json("data.json", function (error, json) {
   }
 
   function showNeighborNodes() {
+
+    // If we aren't showing neighbor nodes
     if (!neighborNodesToggled) {
       d = d3.select(this).node().__data__;
+      //check if murdersToggled or corulesToggled and update accordingly
       if (murdersToggled || corulesToggled) {
         node.classed("hidden", function (o) {
           if (neighboring(d, o) || neighboring(o, d)) return false;
@@ -279,10 +279,9 @@ d3.json("data.json", function (error, json) {
             }
           }
       })
-      //Reduce the op
       neighborNodesToggled = true;
     } else {
-      //Put them back to opacity=1
+      //Hide neighbor nodes, making sure we don't hide anything that should be visible!
       node.classed("dimmed", false);
       if (corulesToggled && murdersToggled) {
         node.classed("hidden", function (d) { return (d.familial_ruler && d.murdered) });
@@ -312,6 +311,8 @@ d3.json("data.json", function (error, json) {
       let buttonLabel = labelsToggled ? "Hide Labels" : "Show Labels"
       labelButton.innerHTML = buttonLabel;
     }
+
+    //********TO DO -- Add class to button to change color and made it 'active'
     let newLabel = button.innerHTML;
     newLabel = newLabel.includes("Show") ? newLabel.replace("Show", "Hide") : newLabel.replace("Hide", "Show")
     button.innerHTML = newLabel;
