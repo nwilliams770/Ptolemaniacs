@@ -69,3 +69,7 @@ h1:empty::before {
   opacity: 0.1;
 }
 
+.ruler {
+  fill: pink;
+}
+
