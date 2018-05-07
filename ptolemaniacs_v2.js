@@ -224,14 +224,10 @@ d3.json("data.json", function (error, json) {
   let neighborNodesToggled = false,
       murdersToggled = false,
       corulesToggled = false,
-      labelsToggled = false;
+      labelsToggled = false,
+      ruleToggled = false;
 
-  var toggleRule = 1;
 
-  const linkedByIndex = {};
-  for (i = 0; i < json.nodes.length; i++) {
-    linkedByIndex[i + "," + i] = 1;
-  };
 
   //Gather the neighbors
   function neighboring(a, b) {
@@ -489,35 +485,31 @@ d3.json("data.json", function (error, json) {
       return d.rule === i;
     })
     
-    circles.transition()
-      .duration(60)
-      .delay(100 * i)
-      .style("fill", "pink");
-    text.transition()
-      .duration(60)
-      .delay(100 * i)
-      .style("display", "inline");   
+    circles.classed("ruler", true);
+    links.classed("hidden", false);
+    // circles.transition()
+    //   .duration(60)
+    //   .delay(100 * i)
+    //   .style("fill", "pink");
+    // text.transition()
+    //   .duration(60)
+    //   .delay(100 * i)
+    //   .classed("hidden", false);   
   }
 
   function showLineOfRule() {
     if (murdersToggled || neighborNodesToggled || corulesToggled) return;
     updateButton(this);        
-    if (toggleRule === 1) {
-      toggleRule = 0;         
+    if (!ruleToggled) {
+      link.classed("hidden", true);
+      ruleToggled = true;         
       for (let i = 1; i < 16; i++) {
         visitNodes(i);
       }
     } else {
       colorizeNodes();      
-      d3.selectAll(".link").style("opacity", function (d) {
-        if (d.type === "child" || d.type === "marriage") {
-          return "1";
-        } else {
-          return "0";
-        }
-      })
-      d3.selectAll(".text").style("display", "none");
-      toggleRule = 1;
+      restoreLinks();
+      ruleToggled = false;
     }
 
   }
