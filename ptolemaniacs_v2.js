@@ -475,13 +475,11 @@ d3.json("data.json", function (error, json) {
 
 
   function visitNodes(i) {
-    link.classed("hidden", true);
-
-    var links = d3.selectAll(".link-rule");
-    var circles = d3.selectAll(".node circle").filter(function (d) {
+    let links = d3.selectAll(".link-rule");
+    let circles = d3.selectAll(".node circle").filter(function (d) {
       return d.rule === i;
     })
-    var text = d3.selectAll(".node text").filter(function (d) {
+    let text = d3.selectAll(".node text").filter(function (d) {
       return d.rule === i;
     })
     
@@ -498,6 +496,7 @@ d3.json("data.json", function (error, json) {
   }
 
   function showLineOfRule() {
+    link.classed("hidden", true);
     if (murdersToggled || neighborNodesToggled || corulesToggled) return;
     updateButton(this);        
     if (!ruleToggled) {
