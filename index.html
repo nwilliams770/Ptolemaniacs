@@ -2,21 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Roboto+Condensed" rel="stylesheet">
+  <link href="reset.css" rel="stylesheet">  
   <link href="style.css" rel="stylesheet">
   <title>Ptolemaniacs by Nicholas Williams</title>
   
 </head>
 <body>
   <!-- <object id='bg' type='image/svg+xml' data='Ptolemaniacs-bg_animated.svg'></object> -->
-  <span class="main--container">
-    <span class="bttn--container">
+  <div class="navbar">
+    <i class="fas fa-bars"></i>
+    <h1 id="title"> Ptolemaniacs </h1>
+    <div class="navbar-right">
+      <i class="fab fa-github"></i>
+      <i class="fab fa-linkedin-in"></i>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1 id='label'></h1>
+      <div id="label--details"></div>
+    </div>
+    <div class="topbar-right">
       <button class='bttn bttn-murders'> Show Murders </button>
       <button class='bttn bttn-labels'> Show Labels </button>
       <button class='bttn bttn-corules'> Show Brother-Sister Marriages </button>
       <button class='bttn bttn-rule'> Show Line of Rule </button>
-    </span>
-    <h1 id='label'></h1>
-    <div id="label--details"></div>  
+    </div>
+  </div>
+  <span class="main--container">
     <div id="chart"></div>
     <!-- <svg id="chart" width="1920" height="1000" viewBox="0 0 600 200" preserveAspectRatio="xMinYMid" /> -->
   </span>
