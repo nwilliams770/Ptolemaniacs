@@ -10,32 +10,48 @@
   
 </head>
 <body>
-  <!-- <object id='bg' type='image/svg+xml' data='Ptolemaniacs-bg_animated.svg'></object> -->
-  <div class="navbar">
-    <i class="fas fa-bars"></i>
-    <h1 id="title"> Ptolemaniacs </h1>
-    <div class="navbar-right">
-      <i class="fab fa-github"></i>
-      <i class="fab fa-linkedin-in"></i>
+  <div id="homepage">
+    <div id="menu" class="menu-hidden">
+      <p> This is a test! </p>
+    </div>
+    <div id="top-content">
+    <!-- <object id='bg' type='image/svg+xml' data='Ptolemaniacs-bg_animated.svg'></object> -->
+
+    
+    <div id="content">
+      <div class="navbar">
+        <i id="menu-icon" class="fas fa-bars"></i>
+        <h1 id="title"> Ptolemaniacs </h1>
+        <div class="navbar-right">
+          <a target="_blank" href="https://github.com/nwilliams770">
+            <i class="fab fa-github" /></i>
+          </a>
+          <a target="_blank" href="https://www.linkedin.com/in/nwilliams770/">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1 id='label'></h1>
+        <div id="label--details"></div>
+      </div>
+      <div class="topbar-right">
+        <button class='bttn bttn-murders'> Show Murders </button>
+        <button class='bttn bttn-labels'> Show Labels </button>
+        <button class='bttn bttn-corules'> Show Brother-Sister Marriages </button>
+        <button class='bttn bttn-rule'> Show Line of Rule </button>
+      </div>
+    </div>
+    <span class="main--container">
+      <div id="chart"></div>
+      <!-- <svg id="chart" width="1920" height="1000" viewBox="0 0 600 200" preserveAspectRatio="xMinYMid" /> -->
+    </span>
     </div>
   </div>
 
-  <div class="topbar">
-    <div class="topbar-left">
-      <h1 id='label'></h1>
-      <div id="label--details"></div>
-    </div>
-    <div class="topbar-right">
-      <button class='bttn bttn-murders'> Show Murders </button>
-      <button class='bttn bttn-labels'> Show Labels </button>
-      <button class='bttn bttn-corules'> Show Brother-Sister Marriages </button>
-      <button class='bttn bttn-rule'> Show Line of Rule </button>
-    </div>
-  </div>
-  <span class="main--container">
-    <div id="chart"></div>
-    <!-- <svg id="chart" width="1920" height="1000" viewBox="0 0 600 200" preserveAspectRatio="xMinYMid" /> -->
-  </span>
   <script type="text/javascript" src="d3.min.js"></script>
   
   

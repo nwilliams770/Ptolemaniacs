@@ -1,3 +1,42 @@
+#menu {
+  height: 100vh;
+  border-right: 1px solid black;
+  box-sizing: border-box;
+}
+
+#homepage {
+  width: 100%;
+  display: flex;
+}
+
+#content {
+  flex: 3;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 60px 80px;
+  max-width: 1400px;
+  height: calc(100vh - 65px);
+  margin: auto;
+}
+
+.menu-hidden {
+  transition: .5s ease;
+  transform: translateX(-300px);
+  width: 0;
+}
+
+.menu-show {
+  transition: .5s ease;
+  transform: translateX(0);
+  width: 300px;
+  min-width: 300px;
+}
+
+
+
 button {
   /* /* width: 150px; */
   height: 50px;
@@ -17,7 +56,7 @@ button {
   text-align: left;
   padding: 15px 40px;
   box-sizing: border-box;
-  font-size: 15px;
+  font-size: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,9 +69,18 @@ button {
     align-items: center;
 }
 
+i {
+  padding: 5px;
+}
+
+i:hover {
+  color: pink;
+  cursor: pointer;
+}
+
 .topbar {
   width: 100%;
-  height: 65px;
+  height: 100px;
   text-align: left;
   padding: 15px 40px;
   box-sizing: border-box;
