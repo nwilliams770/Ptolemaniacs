@@ -30,8 +30,6 @@ d3.json("data.json", function (error, json) {
     .force("link") 
     .links(json.links);
 
-  const header = document.querySelector('#label');
-
   const linkedByIndex = {};
   for (i = 0; i < json.nodes.length; i++) {
     linkedByIndex[i + "," + i] = 1;
@@ -146,10 +144,17 @@ d3.json("data.json", function (error, json) {
                                spouses: [], 
                                rule: { successor: [], 
                                        predessor: [] }};
-    let detailsListContainer = document.getElementById("label--details");
-    let detailsList = document.createElement("ul");
+    const nodeDetailContainer = document.getElementById("node-detail");
+    const detailList = document.createElement("ul");
+    const nodeDetailHeader = document.getElementById("node-detail-header");
+    nodeDetailContainer.appendChild(detailList);
+
+    console.log("YOUR DETAIL CONTAINER ");
+    console.log(nodeDetailContainer);
+
+
     let currentNode = d;
-    header.innerHTML = `${d.name} (${d.lifespan})`;
+    nodeDetailHeader.innerHTML = `${d.name} (${d.lifespan})`;
     const nodeCircle = d3.select(this).select("circle");
     nodeCircle.attr('data-color', `${nodeCircle.style("fill")}`)
     nodeCircle.style('fill', 'yellowgreen');
@@ -183,17 +188,18 @@ d3.json("data.json", function (error, json) {
       if (currentNodeDetails[key].length <= 0) continue;     
       let nodeDetail = document.createElement('li');
       let entry;
+      nodeDetailContainer.appendChild(nodeDetail)
       if (key !== "rule") {
         entry = `${key}: ${currentNodeDetails[key].join(", ")}`;
       } else {
         entry = `Predecessor: ${currentNodeDetails[key]["predessor"]} Successor: ${currentNodeDetails[key]["successor"]}`;
       }
       nodeDetail.appendChild(document.createTextNode(entry));
-      detailsList.appendChild(nodeDetail);
+      detailList.appendChild(nodeDetail);
       
     }
 
-    detailsListContainer.childNodes[0] ? detailsListContainer.replaceChild(detailsList, detailsListContainer.childNodes[0]) : detailsListContainer.appendChild(detailsList)
+    nodeDetailContainer.childNodes[0] ? nodeDetailContainer.replaceChild(detailList, nodeDetailContainer.childNodes[0]) : nodeDetailContainer.appendChild(detailsList)
   }
 
 
@@ -513,14 +519,27 @@ d3.json("data.json", function (error, json) {
 
   }
 
-  const labelButton = document.querySelector('.bttn-labels');
-  const murdersButton = document.querySelector('.bttn-murders');
-  const corulesButton = document.querySelector('.bttn-corules');
-  const lineOfRuleButton = document.querySelector('.bttn-rule');
+  function toggleMenu () {
+    let menu = document.querySelector("#menu");
+    if (menu.classList.contains("menu-hidden")) {
+      menu.classList.remove("menu-hidden");
+      menu.classList.add("menu-show");
+    } else {
+      menu.classList.remove("menu-show");      
+      menu.classList.add("menu-hidden");
+    }
+  }
 
-  murdersButton.addEventListener('click', showMurders);
-  corulesButton.addEventListener('click', showCorules);
-  labelButton.addEventListener('click', showLabels);
-  lineOfRuleButton.addEventListener('click', showLineOfRule);
+  const labelButton = document.querySelector(".bttn-labels");
+  const murdersButton = document.querySelector(".bttn-murders");
+  const corulesButton = document.querySelector(".bttn-corules");
+  const lineOfRuleButton = document.querySelector(".bttn-rule");
+  const menuButton = document.querySelector("#menu-icon");
+
+  murdersButton.addEventListener("click", showMurders);
+  corulesButton.addEventListener("click", showCorules);
+  labelButton.addEventListener("click", showLabels);
+  lineOfRuleButton.addEventListener("click", showLineOfRule);
+  menuButton.addEventListener("click", toggleMenu)
 });
 
