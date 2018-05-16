@@ -17,19 +17,20 @@
   display: flex;
   flex-direction: column;
   padding: 60px 80px;
-  max-width: 1400px;
   height: calc(100vh - 65px);
-  margin: auto;
+  /* margin: auto; */
 }
 
 .menu-hidden {
-  transition: .5s ease;
+  transition: .5s;
   transform: translateX(-300px);
   width: 0;
+  transition-timing-function: cubic-bezier(0.23, 0.32, 0.2, 1.01);
 }
 
 .menu-show {
-  transition: .5s ease;
+  transition: .5s;
+  transition-timing-function: cubic-bezier(0.23, 0.32, 0.2, 1.01);  
   transform: translateX(0);
   width: 300px;
   min-width: 300px;
@@ -64,7 +65,7 @@ button {
   color: black;
 }
 
-.navbar-right {
+.navbar-left {
     display: flex;
     align-items: center;
 }
@@ -95,6 +96,11 @@ button:hover {
 
 button:focus {
   outline: none; 
+}
+
+.topbar-left {
+  min-width: 45%;
+  min-height: 20%;
 }
 
 /* font-family: 'Gloria Hallelujah', cursive;
