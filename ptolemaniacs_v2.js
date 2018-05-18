@@ -136,56 +136,52 @@ d3.json("data.json", function (error, json) {
     });
   })
 
-  function mouseOver(d) {
-    if (neighborNodesToggled) return;
+  function gatherNodeDetails(hoveredNode) {
     const currentNodeDetails = { children: [],
-                               parents: [],
-                               corulers: [],
-                               spouses: [], 
-                               rule: { successor: [], 
-                                       predessor: [] }};
-    const nodeDetailContainer = document.getElementById("node-detail");
-    const detailList = document.createElement("ul");
-    const nodeDetailHeader = document.getElementById("node-detail-header");
-    nodeDetailContainer.appendChild(detailList);
-
-    console.log("YOUR DETAIL CONTAINER ");
-    console.log(nodeDetailContainer);
-
-
-    let currentNode = d;
-    nodeDetailHeader.innerHTML = `${d.name} (${d.lifespan})`;
-    const nodeCircle = d3.select(this).select("circle");
-    nodeCircle.attr('data-color', `${nodeCircle.style("fill")}`)
-    nodeCircle.style('fill', 'yellowgreen');
+                                parents: [],
+                                corulers: [],
+                                spouses: [],
+                                rule: {
+                                  successor: [],
+                                  predessor: []
+                                }
+                              };
     d3.selectAll(".link").each(function (d) {
-      if (d.source.index === currentNode.index || d.target.index === currentNode.index) {
-        switch(d.type) {
+      if (d.source.index === hoveredNode.index || d.target.index === hoveredNode.index) {
+        switch (d.type) {
           case "child":
-            if (d.source.index === currentNode.index) {
+            if (d.source.index === hoveredNode.index) {
               currentNodeDetails["children"].push(d.target.name);
             } else {
               currentNodeDetails["parents"].push(d.source.name);
             }
             break;
           case "marriage":
-            d.source.index === currentNode.index ? currentNodeDetails["spouses"].push(d.target.name) : currentNodeDetails["spouses"].push(d.source.name)
+            d.source.index === hoveredNode.index ? currentNodeDetails["spouses"].push(d.target.name) : currentNodeDetails["spouses"].push(d.source.name)
             break;
           case "corule":
-            d.source.index === currentNode.index ? currentNodeDetails["corulers"].push(d.target.name) : currentNodeDetails["corulers"].push(d.source.name)
+            d.source.index === hoveredNode.index ? currentNodeDetails["corulers"].push(d.target.name) : currentNodeDetails["corulers"].push(d.source.name)
             break;
           case "rule":
-            if (d.source.index === currentNode.index) {
+            if (d.source.index === hoveredNode.index) {
               currentNodeDetails["rule"]["successor"].push(d.target.name);
             } else {
               currentNodeDetails["rule"]["predessor"].push(d.source.name);
-            } 
-            break;            
+            }
+            break;
         }
       }
     })
+    return currentNodeDetails;
+  }
+
+  function appendNodeDetailHTML(currentNodeDetails) {
+    const nodeDetailContainer = document.querySelector("#node-detail");
+    const detailList = document.createElement("ul");    
+    nodeDetailContainer.appendChild(detailList);    
+
     for (let key in currentNodeDetails) {
-      if (currentNodeDetails[key].length <= 0) continue;     
+      if (currentNodeDetails[key].length <= 0) continue;
       let nodeDetail = document.createElement('li');
       let entry;
       nodeDetailContainer.appendChild(nodeDetail)
@@ -196,12 +192,22 @@ d3.json("data.json", function (error, json) {
       }
       nodeDetail.appendChild(document.createTextNode(entry));
       detailList.appendChild(nodeDetail);
-      
     }
-
     nodeDetailContainer.childNodes[0] ? nodeDetailContainer.replaceChild(detailList, nodeDetailContainer.childNodes[0]) : nodeDetailContainer.appendChild(detailsList)
   }
 
+  function mouseOver(d) {
+    if (neighborNodesToggled) return;
+    const currentNodeDetails = gatherNodeDetails(d);
+    const nodeDetailHeader = document.querySelector("#node-detail-header");    
+    nodeDetailHeader.innerHTML = `${d.name} (${d.lifespan})`;
+
+    const nodeCircle = d3.select(this).select("circle");
+    nodeCircle.attr('data-color', `${nodeCircle.style("fill")}`)
+    nodeCircle.style('fill', 'yellowgreen');
+
+    appendNodeDetailHTML(currentNodeDetails);
+  }
 
 // drag and drop funcs
 // *** RENAME THESE
