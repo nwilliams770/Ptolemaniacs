@@ -175,25 +175,44 @@ d3.json("data.json", function (error, json) {
     return currentNodeDetails;
   }
 
-  function appendNodeDetailHTML(currentNodeDetails) {
-    const nodeDetailContainer = document.querySelector("#node-detail");
-    const detailList = document.createElement("ul");    
-    nodeDetailContainer.appendChild(detailList);    
+  function processNodeDetailHTML(currentNodeDetails) {
+    const detailList = document.createElement("ul");
 
     for (let key in currentNodeDetails) {
+      console.log("YOUR LENGTH:")
+      console.log(currentNodeDetails[key].length);
       if (currentNodeDetails[key].length <= 0) continue;
-      let nodeDetail = document.createElement('li');
-      let entry;
-      nodeDetailContainer.appendChild(nodeDetail)
-      if (key !== "rule") {
-        entry = `${key}: ${currentNodeDetails[key].join(", ")}`;
-      } else {
-        entry = `Predecessor: ${currentNodeDetails[key]["predessor"]} Successor: ${currentNodeDetails[key]["successor"]}`;
+      if (key === "rule") {
+        if (currentNodeDetails[key]["successor"].length === 0 && currentNodeDetails[key]["predessor"].length === 0) continue;
       }
-      nodeDetail.appendChild(document.createTextNode(entry));
+      let nodeDetail = document.createElement('li');
+      let keyword = document.createElement("span");
+      let detailEntry, keywordEntry;
+
+      if (key === "children") {
+        keywordEntry = currentNodeDetails[key].join(", ");
+        detailEntry = "Sired ";
+
+
+      }
+
+      keyword.appendChild(document.createTextNode(keywordEntry));
+      nodeDetail.appendChild(document.createTextNode(detailEntry));
+      nodeDetail.appendChild(keyword);
       detailList.appendChild(nodeDetail);
+      appendNodeDetailHTML(detailList)
     }
-    nodeDetailContainer.childNodes[0] ? nodeDetailContainer.replaceChild(detailList, nodeDetailContainer.childNodes[0]) : nodeDetailContainer.appendChild(detailsList)
+  }
+
+  function appendNodeDetailHTML(detailList) {
+    const nodeDetailContainer = document.querySelector("#node-detail");  
+    nodeDetailContainer.childNodes[0] ? nodeDetailContainer.replaceChild(detailList, nodeDetailContainer.childNodes[0]) : nodeDetailContainer.appendChild(detailList);
+      // if (key !== "rule") {
+      //   entry = `${key}: ${currentNodeDetails[key].join(", ")}`;
+      // } else {
+      //   entry = `Predecessor: ${currentNodeDetails[key]["predessor"]} Successor: ${currentNodeDetails[key]["successor"]}`;
+      // }
+      // nodeDetail.appendChild(document.createTextNode(entry));
   }
 
   function mouseOver(d) {
@@ -206,7 +225,7 @@ d3.json("data.json", function (error, json) {
     nodeCircle.attr('data-color', `${nodeCircle.style("fill")}`)
     nodeCircle.style('fill', 'yellowgreen');
 
-    appendNodeDetailHTML(currentNodeDetails);
+    processNodeDetailHTML(currentNodeDetails);
   }
 
 // drag and drop funcs
