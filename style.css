@@ -1,3 +1,9 @@
+span {
+  text-decoration: underline;
+  font-size: 0.8em;
+}
+
+
 #node-detail ul {
   -webkit-animation: fadeIn 400ms ease-in-out;
   animation: fadeIn 400ms ease-in-out;
@@ -41,9 +47,8 @@
 .content-wrapper {
   display: flex;
   flex-direction: column;
-  padding: 60px 80px;
+  padding: 1em 2em;
   height: calc(100vh - 65px);
-  /* margin: auto; */
 }
 
 .menu-hidden {
@@ -64,12 +69,14 @@
 
 
 button {
-  /* /* width: 150px; */
-  height: 50px;
+  display: inline-block;
   font-family: 'Roboto Condensed', sans-serif;
   color: black;
-  border: 2px solid black;
+  border: 0.1em solid black;
+  margin: 0 0.3em 0.3em 0;
+  padding: 0.35em 1.2em;
   text-transform: uppercase;
+  box-sizing: border-box;
 }
 
 #title {
@@ -110,7 +117,7 @@ i:hover {
   box-sizing: border-box;
   font-size: 15px;
   display: flex;
-  align-items: center;
+  justify-content: space-around;
   color: black;
 }
 button:hover {
@@ -183,6 +190,11 @@ line {
 
 h1:empty::before {
   content: "";
+
+}
+
+h1 {
+  font-size: 1.5em;
 }
 
 #label {
