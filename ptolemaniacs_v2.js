@@ -137,8 +137,8 @@ d3.json("data.json", function (error, json) {
   })
 
   function gatherNodeDetails(hoveredNode) {
-    const currentNodeDetails = { children: [],
-                                parents: [],
+    const currentNodeDetails = { parents: [],
+                                children: [],
                                 corulers: [],
                                 spouses: [],
                                 rule: {
@@ -179,12 +179,13 @@ d3.json("data.json", function (error, json) {
     const detailList = document.createElement("ul");
 
     for (let key in currentNodeDetails) {
-      console.log("YOUR LENGTH:")
-      console.log(currentNodeDetails[key].length);
+      // continue if any of the details is empty
       if (currentNodeDetails[key].length <= 0) continue;
       if (key === "rule") {
         if (currentNodeDetails[key]["successor"].length === 0 && currentNodeDetails[key]["predessor"].length === 0) continue;
       }
+
+
       let nodeDetail = document.createElement('li');
       let keyword = document.createElement("span");
       let detailEntry, keywordEntry;
@@ -192,9 +193,16 @@ d3.json("data.json", function (error, json) {
       if (key === "children") {
         keywordEntry = currentNodeDetails[key].join(", ");
         detailEntry = "Sired ";
-
-
-      }
+      } else if (key === "parents") {
+        detailEntry = "Child of ";
+        keywordEntry = `${currentNodeDetails[key][0]} and ${currentNodeDetails[key][1]}`;
+      } else if (key === "spouses") {
+        detailEntry = "Wed to ";
+        keywordEntry = currentNodeDetails[key].join(", ");
+      } else if (key === "corulers") {
+        detailEntry = "Ruled alongside "
+        keywordEntry = currentNodeDetails[key].join(", ");        
+      } 
 
       keyword.appendChild(document.createTextNode(keywordEntry));
       nodeDetail.appendChild(document.createTextNode(detailEntry));
@@ -216,6 +224,7 @@ d3.json("data.json", function (error, json) {
   }
 
   function mouseOver(d) {
+    welcomeMessage.style.display = "none";
     if (neighborNodesToggled) return;
     const currentNodeDetails = gatherNodeDetails(d);
     const nodeDetailHeader = document.querySelector("#node-detail-header");    
@@ -560,6 +569,7 @@ d3.json("data.json", function (error, json) {
   const corulesButton = document.querySelector(".bttn-corules");
   const lineOfRuleButton = document.querySelector(".bttn-rule");
   const menuButton = document.querySelector("#menu-icon");
+  const welcomeMessage = document.querySelector("#welcome-container");
 
   murdersButton.addEventListener("click", showMurders);
   corulesButton.addEventListener("click", showCorules);
