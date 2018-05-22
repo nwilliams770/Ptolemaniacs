@@ -15,12 +15,24 @@ let svg = d3.select("#chart")
             .append("svg")
             .attr("viewBox", "0 0 " + width + " " + height)
             .attr("preserveAspectRatio", "xMidYMid meet");
-
+// const forceX = d3.forceX(width / 2).strength(0.015)
+// const forceY = d3.forceY(height / 2).strength(0.015)
 // defining our forceSimulation in a variable allows us to easily modify it on the fly
+
+var repelForce = d3.forceManyBody().strength(-140).distanceMax(80).distanceMin(20);
+var attractForce = d3.forceManyBody().strength(100).distanceMax(100).distanceMin(100);
+
 let force = d3.forceSimulation()
               .force("charge", d3.forceManyBody().strength(-125))
               .force("center", d3.forceCenter(width / 2, height / 2))
+              // .force("center", d3.forceCenter(width * 0.5, height / 2))
               .force("link", d3.forceLink().distance(75).id(function (d) { return d.index }))
+              // .force('x', forceX)
+              // .force('y', forceY)
+              // .alphaDecay(0.01)
+              // .force("attractForce", attractForce)
+              // .force("repelForce", repelForce)
+
 
 
 d3.json("data.json", function (error, json) {
@@ -101,13 +113,13 @@ d3.json("data.json", function (error, json) {
   let circle = node.append('circle')
     .attr('r', 12)
     .style("fill", function (d) {
-    if (d.generation < 4) {
-      return "#abcb42";
-    } else if (d.generation > 4 && d.generation < 7) {
-      return "#feaf17";
-    } else {
-      return "#f35001";
-    }
+      if (d.generation <= 4) {
+        return "#abcb42";
+      } else if (d.generation > 4 && d.generation < 7) {
+        return "#feaf17";
+      } else {
+        return "#f35001";
+      }
     });
 
   let label = node.append("text")
@@ -181,9 +193,10 @@ d3.json("data.json", function (error, json) {
     for (let key in currentNodeDetails) {
       // continue if any of the details is empty
       if (currentNodeDetails[key].length <= 0) continue;
-      if (key === "rule") {
-        if (currentNodeDetails[key]["successor"].length === 0 && currentNodeDetails[key]["predessor"].length === 0) continue;
-      }
+      if (key === "rule") continue;
+      // if (key === "rule") {
+      //   if (currentNodeDetails[key]["successor"].length === 0 && currentNodeDetails[key]["predessor"].length === 0) continue;
+      // }
 
 
       let nodeDetail = document.createElement('li');
@@ -503,7 +516,7 @@ d3.json("data.json", function (error, json) {
 
   function colorizeNodes() {
     d3.selectAll(".node circle").style("fill", function (d) {
-      if (d.generation < 4) {
+      if (d.generation <= 4) {
         return "#abcb42";
       } else if (d.generation > 4 && d.generation < 7) {
         return "#feaf17";
@@ -515,7 +528,6 @@ d3.json("data.json", function (error, json) {
 
 
   function visitNodes(i) {
-    let links = d3.selectAll(".link-rule");
     let circles = d3.selectAll(".node circle").filter(function (d) {
       return d.rule === i;
     })
@@ -524,24 +536,26 @@ d3.json("data.json", function (error, json) {
     })
     
     circles.classed("ruler", true);
-    links.classed("hidden", false);
-    // circles.transition()
-    //   .duration(60)
-    //   .delay(100 * i)
-    //   .style("fill", "pink");
+    circles.transition()
+      .duration(50)
+      .delay(750 * i)
+      .style("fill", "pink");
     // text.transition()
-    //   .duration(60)
-    //   .delay(100 * i)
+    //   .duration(50)
+    //   .delay(50 * i)
     //   .classed("hidden", false);   
   }
 
   function showLineOfRule() {
-    link.classed("hidden", true);
     if (murdersToggled || neighborNodesToggled || corulesToggled) return;
     updateButton(this);        
     if (!ruleToggled) {
+      //hide all links
       link.classed("hidden", true);
-      ruleToggled = true;         
+      ruleToggled = true; 
+      // reveal only rule links
+      let links = d3.selectAll(".link-rule"); 
+      links.classed("hidden", false);                   
       for (let i = 1; i < 16; i++) {
         visitNodes(i);
       }
@@ -550,7 +564,6 @@ d3.json("data.json", function (error, json) {
       restoreLinks();
       ruleToggled = false;
     }
-
   }
 
   function toggleMenu () {
@@ -558,9 +571,13 @@ d3.json("data.json", function (error, json) {
     if (menu.classList.contains("menu-hidden")) {
       menu.classList.remove("menu-hidden");
       menu.classList.add("menu-show");
+      menuButton.classList.remove("fa-bars");
+      menuButton.classList.add("fa-angle-left");
     } else {
       menu.classList.remove("menu-show");      
       menu.classList.add("menu-hidden");
+      menuButton.classList.remove("fa-angle-left");      
+      menuButton.classList.add("fa-bars");
     }
   }
 
