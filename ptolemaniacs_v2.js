@@ -1,10 +1,15 @@
 // To-Do:
-// - line of rule functionality
-    // - need to refactor text to change from display to add hidden class
-    // - for line of rule, strip class, manually add and remove opacity for labels, cannot do transition for adding class
-// - GROW out nodes, text and push text over on Rule, dbbl click
-// - Create legend using built in d3
+// line-of-rule: 
+//      -- show lineage as iterating through nodes
+//      -- update other funcs to handle lineage
+//      -- hide all other nodes when showing lineage and show text on iteration
+// - ON double click -- grow out node 
+// -- add intro to drawer
 // - STYLING
+      // color scheme
+      // link colors
+      // legend for links as well
+      // button active classes
 
 
 // Philadelphoi
@@ -540,13 +545,26 @@ d3.json("data.json", function (error, json) {
       .duration(50)
       .delay(750 * i)
       .style("fill", "pink");
-    // text.transition()
-    //   .duration(50)
-    //   .delay(50 * i)
-    //   .classed("hidden", false);   
+  }
+
+  function clearDetails() {
+    const nodeDetailContainer = document.querySelector("#node-detail");
+    const nodeDetailHeader = document.querySelector("#node-detail-header");
+    const welcomeMessage = document.querySelector("#welcome-container");
+    welcomeMessage.style.display = "none";
+    nodeDetailHeader.innerHTML = "";
+
+    while (nodeDetailContainer.firstChild) {
+      nodeDetailContainer.removeChild(nodeDetailContainer.firstChild);
+    } 
+  }
+
+  function updateLineageDetails(i) {
+
   }
 
   function showLineOfRule() {
+    clearDetails();
     if (murdersToggled || neighborNodesToggled || corulesToggled) return;
     updateButton(this);        
     if (!ruleToggled) {
