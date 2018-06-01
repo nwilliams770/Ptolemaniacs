@@ -146,7 +146,7 @@
      "generation": 6,
      "murdered": false,
      "familial_ruler": true,
-     "rule": 8},
+     "rule": 6},
 
     {"name": "Ptolemy VI Philometor", 
      "lifespan": "186-145 BCE", 
@@ -173,7 +173,7 @@
      "generation": 7,
      "murdered": true,
      "familial_ruler": true,
-     "rule": 9},
+     "rule": 7},
 
     {"name": "Cleopatra Thea", 
      "lifespan": "164-121 BCE", 
@@ -198,26 +198,28 @@
      "generation": 8,
      "murdered": false,
      "familial_ruler": true,
-     "rule": 9},
+     "rule": 8},
 
     {"name": "Ptolemy X Alexander I", 
      "lifespan": "death: 88 BCE", 
      "generation": 8,
      "murdered": false,
      "familial_ruler": true,
-     "rule": 10},
+     "rule": 9},
 
     {"name": "Cleopatra IV", 
      "lifespan": "138-112 BCE", 
      "generation": 8,
      "murdered": true,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 8},
      
     {"name": "Cleopatra Selene", 
      "lifespan": "135-69 BCE", 
      "generation": 8,
      "murdered": true,
-     "familial_ruler": true},
+     "familial_ruler": true,
+     "rule": 8},
 
     {"name": "Tryphaena", 
      "lifespan": "141-111 BCE", 
@@ -236,7 +238,7 @@
      "generation": 9,
      "murdered": false,
      "familial_ruler": true,
-      "rule": 12},
+      "rule": 11},
 
     {"name": "Ptolemy of Cyprus", 
      "lifespan": "116-58 BCE", 
@@ -249,21 +251,21 @@
      "generation": 9,
      "murdered": true,
      "familial_ruler": false,
-     "rule": 11},
+     "rule": 10},
 
     {"name": "Berenice III", 
      "lifespan": "120-80 BCE", 
      "generation": 9,
      "murdered": true,
      "familial_ruler": true,
-     "rule": 10},
+     "rule": 9},
  
     {"name": "Cleopatra V Tryphaena",
      "lifespan": "95-69 BCE", 
      "generation": 10,
      "murdered": false,
      "familial_ruler": true,
-      "rule": 13},
+      "rule": 11},
 
     {"name": "Berenice IV Epiphaneia", 
      "lifespan": "77-55 BCE", 
@@ -276,35 +278,33 @@
      "generation": 11,
      "murdered": false,
      "familial_ruler": false,
-      "rule": 14},
+      "rule": 12},
 
     {"name": "Arsinoë IV", 
      "lifespan": "68-41 BCE", 
      "generation": 11,
      "murdered": false,
-     "familial_ruler": true,
-     "rule": 15},
+     "familial_ruler": true},
 
     {"name": "Ptolemy XIII Theos Philopator", 
      "lifespan": "62-47 BCE", 
      "generation": 11, 
      "murdered": false,
      "familial_ruler": true,
-     "rule": 14},
+     "rule": 12},
 
     {"name": "Ptolemy XIV", 
      "lifespan": "60-44 BCE", 
      "generation": 11,
      "murdered": false,
      "familial_ruler": false,
-     "rule": 14},
+     "rule": 13},
     
     {"name": "Ptolemy XV Caesarion",
      "lifespan": "60-44 BCE",
      "generation": 12,
      "murdered": true,
-     "familial_ruler": false,
-     "rule": 14}
+     "familial_ruler": false}
   ],
   "links": [
     {"source": 0, "target": 1, "type": "marriage"},
@@ -501,9 +501,6 @@
     {"source": 40, "target": 42, "type": "rule"},
 
     {"source": 42, "target": 44, "type": "rule"},
-    {"source": 42, "target": 45, "type": "rule"},
-    {"source": 42, "target": 46, "type": "rule"},
-
-    {"source": 46, "target": 43, "type": "rule"}
+    {"source": 42, "target": 45, "type": "rule"}
   ]
 }
