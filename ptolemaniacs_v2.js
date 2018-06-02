@@ -271,7 +271,10 @@ d3.json("data.json", function (error, json) {
     d.fx = null, d.fy = null;
     if (murdersToggled) {
       node.style("fill", "red");
-    } else {
+    } else if (ruleToggled) {
+      node.style("fill", "pink");
+    }
+    else {
       colorizeNodes();
     }
   }
@@ -362,7 +365,7 @@ d3.json("data.json", function (error, json) {
   // ETC FUNCTIONALITY *****
   function updateButton(button) {
     if (!d3.select(button).classed("bttn-labels")) {
-      let buttonLabel = labelsToggled ? "Hide Labels" : "Show Labels"
+      let buttonLabel = labelsToggled ? "Hide Tooltips" : "Show Tooltips"
       labelButton.innerHTML = buttonLabel;
     }
 
@@ -381,9 +384,20 @@ d3.json("data.json", function (error, json) {
     })
     if (!murdersToggled) {
       if (corulesToggled) {
+        // const murderedCorulers = node.filter(function (d) { return d.familial_ruler && d.murdered});
+        // murderedCorulers.selectAll("circle").style("fill", "red");
+        // murderedCorulers.selectAll("text").style("display", "inline");
         selected.selectAll('circle').style('fill', 'red');        
-        selected.classed("hidden", false)
+        selected.classed("hidden", false);
         selected.selectAll('text').style('display', 'inline');
+        murdersToggled = true;
+        updateButton(this);
+        return;
+      }
+      else if (ruleToggled) {
+        selected.filter(function (d) {
+          return d.rule;
+        }).selectAll("circle").style("fill", "red");
         murdersToggled = true;
         updateButton(this);
         return;
@@ -412,6 +426,13 @@ d3.json("data.json", function (error, json) {
         murdersToggled = false;
         updateButton(this);
         return;
+      } else if (ruleToggled) {
+        selected.filter(function (d) {
+          return d.rule
+        }).selectAll("circle").style("fill", "pink");
+        murdersToggled = false;
+        updateButton(this);
+        return;
       }
       restoreLinks();
       colorizeNodes();      
@@ -436,7 +457,6 @@ d3.json("data.json", function (error, json) {
   function showCorules() {
     //TO-DO: refactor toggleRule to toggleRuling and only show corules once anim complete
     if (!corulesToggled) {
-      
       if (murdersToggled) {
         const murdereCoruleLinks = d3.selectAll(".link-corule");
         const murdered = d3.selectAll(".node").filter(function (d) { return d.murdered });
@@ -461,6 +481,14 @@ d3.json("data.json", function (error, json) {
         updateButton(this);  
         corulesToggled = true;
         return;        
+      } else if (ruleToggled) {
+        const corulers = node.filter(function (d) { return d.familial_ruler });
+        corulers.classed("hidden", false);
+        corulers.selectAll("circle").style("fill", "blue");
+        link.filter(function (d) { return d.type === "corule"}).classed("hidden", false);
+        corulesToggled = true;
+        updateButton(this);
+        return;
       }
       link.classed("hidden", function (d) {
         return d.type !== "corule"
@@ -483,6 +511,13 @@ d3.json("data.json", function (error, json) {
         link.classed("hidden", true);
         updateButton(this);
         corulesToggled = false;
+        return;
+      } else if (ruleToggled) {
+        const corulers = node.filter(function (d) { return d.familial_ruler });
+        corulers.selectAll("circle").style("fill", "pink");
+        link.filter(function (d) { return d.type === "corule" }).classed("hidden", true);
+        corulesToggled = false;
+        updateButton(this);
         return;
       }
       restoreLinks();      
@@ -570,12 +605,12 @@ d3.json("data.json", function (error, json) {
   function showLineOfRule() {
     clearDetails();
     if (murdersToggled || neighborNodesToggled || corulesToggled) return;
-    updateButton(this);        
     if (!ruleToggled) {
       //hide all links
       link.classed("hidden", true);
       node.classed("hidden", function (d) { return !d.rule });
       ruleToggled = true; 
+      labelsToggled = true;
       // reveal only rule links
       let links = d3.selectAll(".link-rule"); 
       links.classed("hidden", false);                   
@@ -583,11 +618,18 @@ d3.json("data.json", function (error, json) {
         visitNodes(i);
       }
     } else {
-      node.classed("hidden", false);            
+      // cancel any current transitions
+      node.selectAll("circle").transition();
+      node.selectAll("text").transition();
+
+      node.classed("hidden", false);
+      node.selectAll('text').style('display', 'none');                  
       colorizeNodes();      
       restoreLinks();
       ruleToggled = false;
+      labelsToggled = false;
     }
+    updateButton(this);    
   }
 
   function toggleMenu () {
