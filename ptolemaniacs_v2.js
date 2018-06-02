@@ -541,6 +541,10 @@ d3.json("data.json", function (error, json) {
     })
     
     circles.classed("ruler", true);
+    text.transition()
+      .duration(50)
+      .delay(750 * i)
+      .style("display", "inline");
     circles.transition()
       .duration(50)
       .delay(750 * i)
@@ -570,14 +574,16 @@ d3.json("data.json", function (error, json) {
     if (!ruleToggled) {
       //hide all links
       link.classed("hidden", true);
+      node.classed("hidden", function (d) { return !d.rule });
       ruleToggled = true; 
       // reveal only rule links
       let links = d3.selectAll(".link-rule"); 
       links.classed("hidden", false);                   
-      for (let i = 1; i < 16; i++) {
+      for (let i = 1; i < 14; i++) {
         visitNodes(i);
       }
     } else {
+      node.classed("hidden", false);            
       colorizeNodes();      
       restoreLinks();
       ruleToggled = false;
