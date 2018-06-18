@@ -1,6 +1,17 @@
 
 #lineage {
   display: flex;
+
+}
+
+.hide-lineage {
+  transform: translateX(-1000px);
+  transition: 1.2s ease;    
+}
+
+.show-lineage {
+  transform: translateX(0);
+  transition: 1.2s ease;  
 }
 
 #lineage h1, h2 {
@@ -24,6 +35,11 @@
   font-weight: 600;
 }
 
+#lineage ul li i:hover {
+  cursor: default;
+  color: black;
+}
+
 /* ****** D3 CHART ****** */
 .ruler {
   fill: pink;
@@ -31,7 +47,7 @@
 
 line {
   /* stroke-opacity: 0.3; */
-  stroke-width: 1.5px;
+  stroke-width: 1.75px;
   /* stroke: pink; */
   transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);  
 }
@@ -123,11 +139,6 @@ line {
   font-family: 'Raleway', sans-serif;  
 }
 
-#chart-buffer {
-  width: 100%;
-  display: block;
-}
-
 #node-detail ul li {
   font-style: italic;
 }
@@ -145,12 +156,11 @@ line {
 
 .topbar {
   width: 100%;
-  min-height: 10%;
+  min-height: 100px;
   padding: 10px 20px;
   box-sizing: border-box;
   font-size: 15px;
   color: black;
-  display: flex;
   justify-content: space-between;
 }
 
@@ -177,6 +187,26 @@ font-family: 'Roboto Condensed', sans-serif; */
 .legend {
   font-family: 'Raleway', sans-serif;  
   float: right;
+  display: flex;
+}
+
+.legend:first-child div {
+  margin-right: 25px;
+}
+
+.legend-child {
+  transform: translateY(50%);
+  border-top: 1.5px solid BDBDBD;
+}
+
+.legend-marriage {
+  transform: translateY(50%);
+  border-top: 1.5px dashed #4E4E4E;
+}
+
+.legend-diarchy {
+  transform: translateY(50%); 
+  border-top: 1.5px solid #EEC36C;   
 }
 
 .legend p i {
@@ -184,16 +214,21 @@ font-family: 'Roboto Condensed', sans-serif; */
   font-size: 14px;
 }
 
+.legend p i:hover {
+  cursor: default;
+  color: black;
+}
+
 .rise {
-  background: green;
+  background: #94C9CE;
 }
 
 .decline {
-  background: yellow;
+  background: #4D82B2;
 }
 
 .fall {
-  background: red;
+  background: #202E7C;
 }
 
 
@@ -226,7 +261,7 @@ i {
 }
 
 i:hover {
-  color: pink;
+  color: #5980AE;
   cursor: pointer;
 }
 
