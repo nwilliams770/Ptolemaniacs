@@ -6,6 +6,7 @@
   <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Roboto+Condensed|Raleway" rel="stylesheet">
   <link href="reset.css" rel="stylesheet">  
   <link href="style.css" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <title>Ptolemaniacs by Nicholas Williams</title>
   
 </head>
@@ -41,10 +42,10 @@
             </div>
             <h1 id="node-detail-header"></h1>
             <div id="node-detail"></div>
-            <div id="lineage">
+            <div id="lineage" class="hide-lineage">
               <div id="rise">
                 <h1> Rise </h1>
-                <h2> Ptolemy I establishes Egypt as a Hellenistic Kingdom. The Ptolemaic line embraced Egyptian customs including wedding siblings and ruling jointly. </h2>
+                <!-- <h2> Ptolemy I establishes Egypt as a Hellenistic Kingdom. The Ptolemaic line embraced Egyptian customs including wedding siblings and ruling jointly. </h2> -->
                 <ul>
                   <li> <i> 305 - 282 BCE</i>Ptolemy I Soter </li>
                   <li> <i> 285 - 246 BCE</i>Ptolemy II Philadelphus and Arsinoë II </li>
@@ -53,7 +54,7 @@
               </div>
               <div id="decline">
                 <h1> Decline </h1>
-                <h2> Riddled with corruption, familicide, rebellion, and foreign invasion, many rose to the throne an children or infants as puppet rulers.  </h2>
+                <!-- <h2> Riddled with corruption, familicide, rebellion, and foreign invasion, many rose to the throne an children or infants as puppet rulers.  </h2> -->
                 <ul>
                   <li> <i> 221 - 204 BCE</i>Ptolemy IV Philopator and Arsinoë III  </li>
                   <li> <i> 203 - 181 BCE</i>Ptolemy V Epiphanes </li>
@@ -62,7 +63,7 @@
               </div>
               <div id="fall">
                 <h1> Fall </h1>
-                <h2> Struggle for power in the midst of bloody familial feuds leave Egypt weak and under heavy influence from a rising Rome. After the death of Cleopatra VII, Egypt became a Roman province and the surviving Ptolemaic line intermarried into Roman nobility. </h2>
+                <!-- <h2> Struggle for power in the midst of bloody familial feuds leave Egypt weak and under heavy influence from a rising Rome. After the death of Cleopatra VII, Egypt became a Roman province and the surviving Ptolemaic line intermarried into Roman nobility. </h2> -->
                 <ul>
                   <li> <i> 170 - 163 BCE</i>Ptolemy VIII Physcon and Cleopatra II </li>
                   <li> <i> 163 - 145 BCE</i> Ptolemy VI Philometer </li>
@@ -92,12 +93,22 @@
         <div id="chart-buffer"></div>
         <span class="main--container">
           <div class="legend">
-            <p class="country-name">
+            <div>
+            <p>
+              <span class="key-dot legend-child"></span> <i> Child </i></p>
+            <p>
+              <span class="key-dot legend-marriage"></span> <i> Marriage </i></p>
+            <p>
+              <span class="key-dot legend-diarchy"></span> <i> Diarchy </i></p>
+            </div>
+             <div>
+            <p>
               <span class="key-dot rise"></span> <i> Rise </i> (305 BCE - 221 BCE)</p>
-            <p class="country-name">
+            <p>
               <span class="key-dot decline"></span> <i> Decline </i> (221 BCE - 145 BCE)</p>
-            <p class="country-name">
+            <p>
               <span class="key-dot fall"></span> <i> Fall </i> (145 BCE - 30 BCE)</p>
+            </div>
           </div>
           <div id="chart"></div>
         <!-- <svg id="chart" width="1920" height="1000" viewBox="0 0 600 200" preserveAspectRatio="xMinYMid" /> -->
