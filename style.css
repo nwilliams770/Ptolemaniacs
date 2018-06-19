@@ -49,7 +49,7 @@ line {
   /* stroke-opacity: 0.3; */
   stroke-width: 1.75px;
   /* stroke: pink; */
-  transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);  
+  transition: 0.5s cubic-bezier(0.08, 0.32, 0.17, 0.93);  
 }
 
 .link-marriage {
@@ -60,7 +60,7 @@ line {
   stroke: black;
   stroke-width: 2px;
   fill: white;
-  transition: 1.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);
+  transition: 0.2s cubic-bezier(0.08, 0.32, 0.17, 0.93);
 }
 
 .node:hover {
@@ -196,7 +196,7 @@ font-family: 'Roboto Condensed', sans-serif; */
 
 .legend-child {
   transform: translateY(50%);
-  border-top: 1.5px solid BDBDBD;
+  border-top: 1.5px solid #BDBDBD;
 }
 
 .legend-marriage {
