@@ -1,9 +1,15 @@
 // To-Do:
+
+// ** Updated
+  // -check line of rule
+  // -check diarchies, murders, neighbors all function properly
+  // -fix styling of legend, child box empty
+  // -add intro to drawer
 // line-of-rule: 
 //      -- show lineage as iterating through nodes
 //      -- update other funcs to handle lineage
 //      -- hide all other nodes when showing lineage and show text on iteration
-// - ON double click -- grow out node 
+
 // -- add intro to drawer
 // - STYLING
       // color scheme
@@ -72,7 +78,7 @@ d3.json("data.json", function (error, json) {
       .attr("orient", "auto")
       .append("path")
       .attr("d", "M0,-5L10,0L0,5")
-      .attr("fill", "red");
+    .attr("fill", "#D7D7D7");
 
   let link = svg.append("g").selectAll('.link')
                 .data(json.links)
@@ -89,13 +95,13 @@ d3.json("data.json", function (error, json) {
                 .style("stroke", function (d) {
                   switch (d.type) {
                     case "child":
-                      return "red";
+                      return "#D7D7D7";
                     case "marriage":
-                      return "blue";
+                      return "#4E4E4E";
                     case "corule":
-                      return "green";
+                      return "#EEC36C";
                     case "rule":
-                      return "purple";
+                      return "#D4663C";
                   }
                 });
 
@@ -119,11 +125,11 @@ d3.json("data.json", function (error, json) {
     .attr('r', 12)
     .style("fill", function (d) {
       if (d.generation <= 4) {
-        return "#abcb42";
+        return "#94C9CE";
       } else if (d.generation > 4 && d.generation < 7) {
-        return "#feaf17";
+        return "#4D82B2";
       } else {
-        return "#f35001";
+        return "#202E7C";
       }
     });
 
@@ -242,6 +248,7 @@ d3.json("data.json", function (error, json) {
   }
 
   function mouseOver(d) {
+    if (ruleToggled) return;
     welcomeMessage.style.display = "none";
     if (neighborNodesToggled) return;
     const currentNodeDetails = gatherNodeDetails(d);
@@ -250,7 +257,7 @@ d3.json("data.json", function (error, json) {
 
     const nodeCircle = d3.select(this).select("circle");
     nodeCircle.attr('data-color', `${nodeCircle.style("fill")}`)
-    nodeCircle.style('fill', 'yellowgreen');
+    nodeCircle.style('fill', '#FAEB81');
 
     processNodeDetailHTML(currentNodeDetails);
   }
@@ -296,11 +303,13 @@ d3.json("data.json", function (error, json) {
   }
 
   function showNeighborNodes() {
-
+    if (ruleToggled) return;
+    let clickedNode = d3.select(this).select("circle");
     // If we aren't showing neighbor nodes
     if (!neighborNodesToggled) {
-      d = d3.select(this).node().__data__;
+      let d = d3.select(this).node().__data__;
       //check if murdersToggled or corulesToggled and update accordingly
+      clickedNode.attr("r", 17);
       if (murdersToggled || corulesToggled) {
         node.classed("hidden", function (o) {
           if (neighboring(d, o) || neighboring(o, d)) return false;
@@ -340,20 +349,24 @@ d3.json("data.json", function (error, json) {
     } else {
       //Hide neighbor nodes, making sure we don't hide anything that should be visible!
       node.classed("dimmed", false);
+      clickedNode.attr("r", 12);      
       if (corulesToggled && murdersToggled) {
-        node.classed("hidden", function (d) { return (d.familial_ruler && d.murdered) });
+        node.classed("hidden", function (d) { return !(d.familial_ruler || d.murdered) });
         link.classed("hidden", function (d) { return !(d.type === "corule") })
         label.style("display", function (d) { return (d.familial_ruler || d.murdered) ? "inline" : "none" })
+        neighborNodesToggled = false;
         return;     
       } else if (corulesToggled) {
         node.classed("hidden", function (d) { return !d.familial_ruler })
         link.classed("hidden", function (d) { return !(d.type === "corule") })
         label.style("display", function (d) { return d.familial_ruler ? "inline" : "none"}) 
+        neighborNodesToggled = false;
         return;
       } else if (murdersToggled) {
         node.classed("hidden", function (d) { return !d.murdered })
         link.classed("hidden", true);
         label.style("display", function (d) { return d.murdered ? "inline" : "none" })
+        neighborNodesToggled = false;
         return;
       }
       link.classed("dimmed", false);
@@ -387,9 +400,10 @@ d3.json("data.json", function (error, json) {
         // const murderedCorulers = node.filter(function (d) { return d.familial_ruler && d.murdered});
         // murderedCorulers.selectAll("circle").style("fill", "red");
         // murderedCorulers.selectAll("text").style("display", "inline");
-        selected.selectAll('circle').style('fill', 'red');        
-        selected.classed("hidden", false);
-        selected.selectAll('text').style('display', 'inline');
+        let filtered = selected.filter(function (d) {return d.familial_ruler})
+        filtered.selectAll('circle').style('fill', '#AE3E49');        
+        filtered.classed("hidden", false);
+        filtered.selectAll('text').style('display', 'inline');
         murdersToggled = true;
         updateButton(this);
         return;
@@ -397,7 +411,7 @@ d3.json("data.json", function (error, json) {
       else if (ruleToggled) {
         selected.filter(function (d) {
           return d.rule;
-        }).selectAll("circle").style("fill", "red");
+        }).selectAll("circle").style("fill", "#AE3E49");
         murdersToggled = true;
         updateButton(this);
         return;
@@ -408,7 +422,7 @@ d3.json("data.json", function (error, json) {
       //                           .style("font", "20px helvetica");
       link.classed("hidden", true);      
       notSelected.classed("hidden", true);
-      selected.selectAll('circle').style('fill', 'red');
+      selected.selectAll('circle').style('fill', '#AE3E49');
       selected.selectAll('text').style('display', 'inline');
       murdersToggled = true;
       labelsToggled = true;
@@ -452,39 +466,44 @@ d3.json("data.json", function (error, json) {
 
   }
 
-
-
   function showCorules() {
     //TO-DO: refactor toggleRule to toggleRuling and only show corules once anim complete
     if (!corulesToggled) {
       if (murdersToggled) {
-        const murdereCoruleLinks = d3.selectAll(".link-corule");
-        const murdered = d3.selectAll(".node").filter(function (d) { return d.murdered });
-        const corulers = d3.selectAll(".node").filter(function (d) { return d.familial_ruler && (!d.murdered)})
-        murdered.each(function (murderedNode) {
-          murdereCoruleLinks.each(function (coruleLink) {
-            corulers.each(function (node) {
-              //check if current link is connect to the murderedNode
-              if (murderedNode.index === coruleLink.source.index || murderedNode.index === coruleLink.target.index) {
-                // now check if the node neighbors the murderedNode by means of ANY link type
-                if (neighboring(murderedNode, node) || neighboring(node, murderedNode)) {
-                  if (node.index === coruleLink.source.index || node.index === coruleLink.target.index) {
-                    d3.select(this).classed("hidden", false);
-                    d3.select(this).select("text").style("display", "inline");                
-                    d3.select(`#link-${coruleLink.index}`).classed("hidden", false);
-                 }
-                }
-              }
-            })
-          })
-        }) 
-        updateButton(this);  
+        link.classed("hidden", function (d) { return !(d.type ===  "corule")});
+        node.classed("hidden", function (d) { return !(d.murdered || d.familial_ruler)});
+        label.style("display", function (d) { return (d.murdered || d.familial_ruler) ? "inline" : "none"})
+        updateButton(this)
         corulesToggled = true;
-        return;        
+        return;
+      //   const murdereCoruleLinks = d3.selectAll(".link-corule");
+      //   const murdered = d3.selectAll(".node").filter(function (d) { return d.murdered });
+      //   const corulers = d3.selectAll(".node").filter(function (d) { return d.familial_ruler && (!d.murdered)})
+      //   murdered.each(function (murderedNode) {
+      //     murdereCoruleLinks.each(function (coruleLink) {
+      //       corulers.each(function (node) {
+      //         //check if current link is connect to the murderedNode
+      //         if (murderedNode.index === coruleLink.source.index || murderedNode.index === coruleLink.target.index) {
+      //           // now check if the node neighbors the murderedNode by means of ANY link type
+      //           if (neighboring(murderedNode, node) || neighboring(node, murderedNode)) {
+      //             if (node.index === coruleLink.source.index || node.index === coruleLink.target.index) {
+      //               d3.select(this).classed("hidden", false);
+      //               d3.select(this).select("text").style("display", "inline");                
+      //               d3.select(`#link-${coruleLink.index}`).classed("hidden", false);
+      //            }
+      //           }
+      //         }
+      //       })
+      //     })
+      //   }) 
+      //   updateButton(this);  
+      //   corulesToggled = true;
+      //   return;        
       } else if (ruleToggled) {
         const corulers = node.filter(function (d) { return d.familial_ruler });
         corulers.classed("hidden", false);
-        corulers.selectAll("circle").style("fill", "blue");
+        corulers.selectAll("circle").style("fill", "#FAEB81");
+        link.classed("hidden", true);
         link.filter(function (d) { return d.type === "corule"}).classed("hidden", false);
         corulesToggled = true;
         updateButton(this);
@@ -508,14 +527,16 @@ d3.json("data.json", function (error, json) {
           return !d.murdered ? "none" : "inline"
         })
         node.classed("hidden", function (d) { return !d.murdered});
+        node.filter(function (d) { return d.murdered }).selectAll("circle").style("fill", "#AE3E49")
         link.classed("hidden", true);
         updateButton(this);
         corulesToggled = false;
         return;
       } else if (ruleToggled) {
         const corulers = node.filter(function (d) { return d.familial_ruler });
-        corulers.selectAll("circle").style("fill", "pink");
+        corulers.selectAll("circle").style("fill", "#FAEB81");
         link.filter(function (d) { return d.type === "corule" }).classed("hidden", true);
+        link.filter(function (d) { return d.type === "rule" }).classed("hidden", false);        
         corulesToggled = false;
         updateButton(this);
         return;
@@ -533,8 +554,6 @@ d3.json("data.json", function (error, json) {
     nodeCircles = nodeCircles || d3.selectAll(".node");
     nodeCircles.classed("hidden", !(nodeCircles.classed("hidden")));
   }
-
-
 
   function showLabels() {
     updateButton(this);    
@@ -557,11 +576,11 @@ d3.json("data.json", function (error, json) {
   function colorizeNodes() {
     d3.selectAll(".node circle").style("fill", function (d) {
       if (d.generation <= 4) {
-        return "#abcb42";
+        return "#94C9CE";
       } else if (d.generation > 4 && d.generation < 7) {
-        return "#feaf17";
+        return "#4D82B2";
       } else {
-        return "#f35001";
+        return "#202E7C";
       }
     });
   }
@@ -583,7 +602,7 @@ d3.json("data.json", function (error, json) {
     circles.transition()
       .duration(50)
       .delay(750 * i)
-      .style("fill", "pink");
+      .style("fill", "#BBDCCD");
   }
 
   function clearDetails() {
@@ -598,14 +617,23 @@ d3.json("data.json", function (error, json) {
     } 
   }
 
-  function updateLineageDetails(i) {
-
+  function toggleLineageText() {
+    const lineageText = document.querySelector("#lineage");
+    if (lineageText.classList.contains("hide-lineage")) {
+      lineageText.removeAttribute("class", "hide-lineage");
+      lineageText.setAttribute("class", "show-lineage");
+    } else if (lineageText.classList.contains("show-lineage")) {
+      lineageText.removeAttribute("class", "show-lineage");      
+      lineageText.setAttribute("class", "hide-lineage");
+    }
+ 
   }
 
   function showLineOfRule() {
-    clearDetails();
     if (murdersToggled || neighborNodesToggled || corulesToggled) return;
     if (!ruleToggled) {
+      clearDetails();   
+      toggleLineageText();   
       //hide all links
       link.classed("hidden", true);
       node.classed("hidden", function (d) { return !d.rule });
@@ -622,6 +650,7 @@ d3.json("data.json", function (error, json) {
       node.selectAll("circle").transition();
       node.selectAll("text").transition();
 
+      toggleLineageText();      
       node.classed("hidden", false);
       node.selectAll('text').style('display', 'none');                  
       colorizeNodes();      
@@ -643,7 +672,7 @@ d3.json("data.json", function (error, json) {
       menu.classList.remove("menu-show");      
       menu.classList.add("menu-hidden");
       menuButton.classList.remove("fa-angle-left");      
-      menuButton.classList.add("fa-bars");
+      menuButton.classList.add("fa-bars");     
     }
   }
 
