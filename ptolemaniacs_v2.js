@@ -661,20 +661,41 @@ d3.json("data.json", function (error, json) {
     updateButton(this);    
   }
 
-  function toggleMenu () {
-    let menu = document.querySelector("#menu");
-    if (menu.classList.contains("menu-hidden")) {
-      menu.classList.remove("menu-hidden");
-      menu.classList.add("menu-show");
-      menuButton.classList.remove("fa-bars");
-      menuButton.classList.add("fa-angle-left");
+  function toggleModal () {
+    const modal = document.querySelector("#modal"); 
+    const body = document.querySelector("body");
+    if (modal.classList.contains("modal-show")) {
+      modal.classList.remove("modal-show");
+      modal.classList.add("modal-hide");
+      body.classList.remove("freeze-scroll");
+
+
     } else {
-      menu.classList.remove("menu-show");      
-      menu.classList.add("menu-hidden");
-      menuButton.classList.remove("fa-angle-left");      
-      menuButton.classList.add("fa-bars");     
-    }
+      modal.classList.remove("modal-hide");
+      modal.classList.add("modal-show");
+      body.classList.add("freeze-scroll");
+
+  
+    } 
+
   }
+
+  // function toggleMenu () {
+  //   let menu = document.querySelector("#menu");
+  //   if (menu.classList.contains("menu-hidden")) {
+  //     menu.classList.remove("menu-hidden");
+  //     menu.classList.add("menu-show");
+  //     menuButton.classList.remove("fa-bars");
+  //     menuButton.classList.add("fa-angle-left");
+  //   } else {
+  //     menu.classList.remove("menu-show");      
+  //     menu.classList.add("menu-hidden");
+  //     menuButton.classList.remove("fa-angle-left");      
+  //     menuButton.classList.add("fa-bars");     
+  //   }
+  // }
+
+
 
   const labelButton = document.querySelector(".bttn-labels");
   const murdersButton = document.querySelector(".bttn-murders");
@@ -682,11 +703,16 @@ d3.json("data.json", function (error, json) {
   const lineOfRuleButton = document.querySelector(".bttn-rule");
   const menuButton = document.querySelector("#menu-icon");
   const welcomeMessage = document.querySelector("#welcome-container");
+  const modal = document.querySelector("#modal");
 
   murdersButton.addEventListener("click", showMurders);
   corulesButton.addEventListener("click", showCorules);
   labelButton.addEventListener("click", showLabels);
   lineOfRuleButton.addEventListener("click", showLineOfRule);
-  menuButton.addEventListener("click", toggleMenu)
+  // menuButton.addEventListener("click", toggleMenu)
+  menuButton.addEventListener("click", toggleModal);
+  modal.addEventListener("click", toggleModal);
+
+
 });
 
