@@ -418,7 +418,6 @@
 
     {"source": 40, "target": 41, "type": "marriage"},
 
-
     {"source": 41, "target": 42, "type": "child"},
     {"source": 40, "target": 42, "type": "child"},
     {"source": 41, "target": 43, "type": "child"},
@@ -431,7 +430,6 @@
     {"source": 40, "target": 44, "type": "child"},
     {"source": 42, "target": 46, "type": "child"},
     
-
     {"source": 43, "target": 44, "type": "marriage"},
     {"source": 43, "target": 45, "type": "marriage"},
 
@@ -442,7 +440,6 @@
     {"source": 14, "target": 10, "type": "corule"},
 
     {"source": 15, "target": 16, "type": "corule"},
-
 
     {"source": 22, "target": 23, "type": "corule"},
 
