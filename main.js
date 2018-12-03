@@ -1,22 +1,3 @@
-// To-Do:
-
-// ** Updated
-  // -check line of rule
-  // -check diarchies, murders, neighbors all function properly
-  // -fix styling of legend, child box empty
-  // -add intro to drawer
-// line-of-rule: 
-//      -- show lineage as iterating through nodes
-//      -- update other funcs to handle lineage
-//      -- hide all other nodes when showing lineage and show text on iteration
-
-// -- add intro to drawer
-// - STYLING
-      // color scheme
-      // link colors
-      // legend for links as well
-      // button active classes
-
 
 // Philadelphoi
 let width =1920,
@@ -26,9 +7,6 @@ let svg = d3.select("#chart")
             .append("svg")
             .attr("viewBox", "0 0 " + width + " " + height)
             .attr("preserveAspectRatio", "xMidYMid meet");
-// const forceX = d3.forceX(width / 2).strength(0.015)
-// const forceY = d3.forceY(height / 2).strength(0.015)
-// defining our forceSimulation in a variable allows us to easily modify it on the fly
 
 var repelForce = d3.forceManyBody().strength(-140).distanceMax(80).distanceMin(20);
 var attractForce = d3.forceManyBody().strength(100).distanceMax(100).distanceMin(100);
@@ -36,15 +14,7 @@ var attractForce = d3.forceManyBody().strength(100).distanceMax(100).distanceMin
 let force = d3.forceSimulation()
               .force("charge", d3.forceManyBody().strength(-125))
               .force("center", d3.forceCenter(width / 2, height / 2))
-              // .force("center", d3.forceCenter(width * 0.5, height / 2))
               .force("link", d3.forceLink().distance(75).id(function (d) { return d.index }))
-              // .force('x', forceX)
-              // .force('y', forceY)
-              // .alphaDecay(0.01)
-              // .force("attractForce", attractForce)
-              // .force("repelForce", repelForce)
-
-
 
 d3.json("data.json", function (error, json) {
   if (error) throw error;
@@ -202,13 +172,8 @@ d3.json("data.json", function (error, json) {
     const detailList = document.createElement("ul");
 
     for (let key in currentNodeDetails) {
-      // continue if any of the details is empty
       if (currentNodeDetails[key].length <= 0) continue;
       if (key === "rule") continue;
-      // if (key === "rule") {
-      //   if (currentNodeDetails[key]["successor"].length === 0 && currentNodeDetails[key]["predessor"].length === 0) continue;
-      // }
-
 
       let nodeDetail = document.createElement('li');
       let keyword = document.createElement("span");
@@ -239,12 +204,6 @@ d3.json("data.json", function (error, json) {
   function appendNodeDetailHTML(detailList) {
     const nodeDetailContainer = document.querySelector("#node-detail");  
     nodeDetailContainer.childNodes[0] ? nodeDetailContainer.replaceChild(detailList, nodeDetailContainer.childNodes[0]) : nodeDetailContainer.appendChild(detailList);
-      // if (key !== "rule") {
-      //   entry = `${key}: ${currentNodeDetails[key].join(", ")}`;
-      // } else {
-      //   entry = `Predecessor: ${currentNodeDetails[key]["predessor"]} Successor: ${currentNodeDetails[key]["successor"]}`;
-      // }
-      // nodeDetail.appendChild(document.createTextNode(entry));
   }
 
   function mouseOver(d) {
@@ -263,7 +222,6 @@ d3.json("data.json", function (error, json) {
   }
 
 // drag and drop funcs
-// *** RENAME THESE
   function dragBegin(d) {
     if (!d3.event.active) force.alphaTarget(0.3).restart();
     d.fx = d.x, d.fy = d.y;
@@ -417,16 +375,12 @@ d3.json("data.json", function (error, json) {
         return;
       }
 
-      // selected.selectAll("circle").attr("r", "15");
-      // selected.selectAll("text").attr("dx", "1.5em")
-      //                           .style("font", "20px helvetica");
       link.classed("hidden", true);      
       notSelected.classed("hidden", true);
       selected.selectAll('circle').style('fill', '#AE3E49');
       selected.selectAll('text').style('display', 'inline');
       murdersToggled = true;
       labelsToggled = true;
-      // showLabels()
 
     } else {
       if (corulesToggled) {
@@ -467,7 +421,6 @@ d3.json("data.json", function (error, json) {
   }
 
   function showCorules() {
-    //TO-DO: refactor toggleRule to toggleRuling and only show corules once anim complete
     if (!corulesToggled) {
       if (murdersToggled) {
         link.classed("hidden", function (d) { return !(d.type ===  "corule")});
@@ -475,30 +428,7 @@ d3.json("data.json", function (error, json) {
         label.style("display", function (d) { return (d.murdered || d.familial_ruler) ? "inline" : "none"})
         updateButton(this)
         corulesToggled = true;
-        return;
-      //   const murdereCoruleLinks = d3.selectAll(".link-corule");
-      //   const murdered = d3.selectAll(".node").filter(function (d) { return d.murdered });
-      //   const corulers = d3.selectAll(".node").filter(function (d) { return d.familial_ruler && (!d.murdered)})
-      //   murdered.each(function (murderedNode) {
-      //     murdereCoruleLinks.each(function (coruleLink) {
-      //       corulers.each(function (node) {
-      //         //check if current link is connect to the murderedNode
-      //         if (murderedNode.index === coruleLink.source.index || murderedNode.index === coruleLink.target.index) {
-      //           // now check if the node neighbors the murderedNode by means of ANY link type
-      //           if (neighboring(murderedNode, node) || neighboring(node, murderedNode)) {
-      //             if (node.index === coruleLink.source.index || node.index === coruleLink.target.index) {
-      //               d3.select(this).classed("hidden", false);
-      //               d3.select(this).select("text").style("display", "inline");                
-      //               d3.select(`#link-${coruleLink.index}`).classed("hidden", false);
-      //            }
-      //           }
-      //         }
-      //       })
-      //     })
-      //   }) 
-      //   updateButton(this);  
-      //   corulesToggled = true;
-      //   return;        
+        return;      
       } else if (ruleToggled) {
         const corulers = node.filter(function (d) { return d.familial_ruler });
         corulers.classed("hidden", false);
@@ -584,7 +514,6 @@ d3.json("data.json", function (error, json) {
       }
     });
   }
-
 
   function visitNodes(i) {
     let circles = d3.selectAll(".node circle").filter(function (d) {
@@ -680,23 +609,6 @@ d3.json("data.json", function (error, json) {
 
   }
 
-  // function toggleMenu () {
-  //   let menu = document.querySelector("#menu");
-  //   if (menu.classList.contains("menu-hidden")) {
-  //     menu.classList.remove("menu-hidden");
-  //     menu.classList.add("menu-show");
-  //     menuButton.classList.remove("fa-bars");
-  //     menuButton.classList.add("fa-angle-left");
-  //   } else {
-  //     menu.classList.remove("menu-show");      
-  //     menu.classList.add("menu-hidden");
-  //     menuButton.classList.remove("fa-angle-left");      
-  //     menuButton.classList.add("fa-bars");     
-  //   }
-  // }
-
-
-
   const labelButton = document.querySelector(".bttn-labels");
   const murdersButton = document.querySelector(".bttn-murders");
   const corulesButton = document.querySelector(".bttn-corules");
@@ -709,7 +621,6 @@ d3.json("data.json", function (error, json) {
   corulesButton.addEventListener("click", showCorules);
   labelButton.addEventListener("click", showLabels);
   lineOfRuleButton.addEventListener("click", showLineOfRule);
-  // menuButton.addEventListener("click", toggleMenu)
   menuButton.addEventListener("click", toggleModal);
   modal.addEventListener("click", toggleModal);
 
